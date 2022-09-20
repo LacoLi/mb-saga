@@ -1,0 +1,51 @@
+[data-page='bible'] {
+  background-color: getColor(black);
+  width: 100%;
+  height: 100%;
+
+  & > .title-box {
+    & > em {
+      text-align: center;
+      color: getColor(white);
+      font-size: 3em;
+    }
+  }
+
+  & > .death-box {
+    width: 50vw;
+  }
+
+  & > .button-box {
+    & > button {
+      cursor: pointer;
+      padding: 10px 20px;
+      border: 2px solid getColor(red-4);
+      background-color: getColor(black);
+
+      font-size: 1.5em;
+      color: getColor(red-4);
+
+      &.twitch {
+        border: 2px solid getColor(purple-4);
+        color: getColor(purple-4);
+
+        &:hover {
+          background-color: getColor(purple-4);
+          color: getColor(white);
+        }
+      }
+      &.blog {
+        border: 2px solid getColor(green-4);
+        color: getColor(green-4);
+
+        &:hover {
+          background-color: getColor(green-4);
+          color: getColor(white);
+        }
+      }
+    }
+  }
+}
+
+.space {
+}
