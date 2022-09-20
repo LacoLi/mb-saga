@@ -10,6 +10,6 @@ COPY . .
 
 RUN yarn install
 
-EXPOSE 666
+EXPOSE 6666
 
 CMD ["yarn", "run", "back-start"]
