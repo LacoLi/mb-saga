@@ -10,6 +10,6 @@ COPY . .
 
 RUN yarn install
 
-EXPOSE 9998
+EXPOSE 80
 
 CMD ["yarn", "run", "web-start"]
