@@ -33,7 +33,7 @@ function MBSaga(props: MBSagaProps) {
     text: string;
   }>({ type: searchType.ALL, text: '' });
   const [mbIdx, setMbIdx] = React.useState<number>(0);
-  const [mbData, setMbData] = React.useState<IMBData>(mbList[0]);
+  const [mbData, setMbData] = React.useState<IMBData>(mbList[Math.floor(Math.random() * mbList.length)]);
   const [mbHidden, setMbHidden] = React.useState<boolean>(false);
   const [mbPlayer, setMbPlayer] = React.useState<boolean>(false);
   /* ===== Const ===== */
@@ -55,7 +55,7 @@ function MBSaga(props: MBSagaProps) {
     window.speechSynthesis.cancel(); // 현재 읽고있다면 초기화
 
     const speechMsg = new SpeechSynthesisUtterance();
-    speechMsg.rate = 2; // 속도: 0.1 ~ 10
+    speechMsg.rate = 1; // 속도: 0.1 ~ 10
     speechMsg.pitch = 1; // 음높이: 0 ~ 2
     speechMsg.lang = 'ko-KR';
     speechMsg.text = mbData.contents;
@@ -77,7 +77,7 @@ function MBSaga(props: MBSagaProps) {
   return (
     <div data-page="mbSaga">
       <header className={classNames(mbHidden ? 'hide-list' : '')}>
-        <ReactAudioPlayer src={ANT_DEN} autoPlay loop />
+        <ReactAudioPlayer src={ANT_DEN} autoPlay={true} loop />
         <div className="search">
           <select value={searchOption.type} onChange={(v) => handleSearchChange({ ...searchOption, type: v.target.value as searchType })}>
             <option value={searchType.ALL}>{`전체`}</option>
