@@ -4,11 +4,11 @@ services:
       dockerfile: ./packages/web-server/Dockerfile
       context: .
     ports:
-      - 9998:9998
+      - 80:80
 
   back:
     build:
       dockerfile: ./packages/back-server/Dockerfile
       context: .
     ports:
-      - 9999:9999
+      - 666:666
