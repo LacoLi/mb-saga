@@ -1,0 +1,273 @@
+/*------------------------------------------------------------------------------------------------------------------------------------------
+ * COMMON.SCSS
+ * WRITER : 김재원
+ * DATE : 2022-01-17
+ * DISCRIPTION : 공통 SCSS를 정의한다.
+ * 개정이력 :
+--------------------------------------------------------------------------------------------------------------------------------------------*/
+/* --------------------------------------------------
+ * Color Common
+ * -------------------------------------------------- */
+@function getColor($color, $opacity: 1) {
+  @return rgba(map-get($colors, $color), $opacity);
+}
+
+@mixin setFontColor($color) {
+  color: getColor($color);
+}
+
+@mixin setBackColor($color) {
+  background-color: getColor($color);
+}
+
+@mixin setBorderColor($color) {
+  border-color: getColor($color);
+}
+
+@mixin noImage {
+  &[src=''] {
+    position: relative;
+    background-color: getColor(gray-4);
+
+    &::after {
+      content: 'No Image';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-size: 14px;
+      font-weight: bold;
+      color: getColor(gray-6);
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
+@each $id, $color in $colors {
+  .ft-#{$id} {
+    color: $color !important;
+  }
+  .bg-#{$id} {
+    background-color: $color !important;
+  }
+  .bd-#{$id} {
+    border-color: $color !important;
+  }
+  .h-ft-#{$id}:hover,
+  .h-ft-#{$id}.hover {
+    color: $color !important;
+  }
+  .h-bg-#{$id}:hover,
+  .h-bg-#{$id}.hover {
+    background-color: $color !important;
+  }
+  .h-bd-#{$id}:hover,
+  .h-bd-#{$id}.hover {
+    border-color: $color !important;
+  }
+  .a-ft-#{$id}:active,
+  .a-ft-#{$id}.active {
+    color: $color !important;
+  }
+  .a-bg-#{$id}:active,
+  .a-bg-#{$id}.active {
+    background-color: $color !important;
+  }
+  .a-bd-#{$id}:active,
+  .a-bd-#{$id}.active {
+    border-color: $color !important;
+  }
+}
+
+.ft-none {
+  color: initial !important;
+}
+.bg-none {
+  background-color: transparent !important;
+}
+.bd-none {
+  border-width: 0 !important;
+}
+
+.linem {
+  font-size: 0;
+
+  & > * {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 12px;
+  }
+
+  &::after {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 100%;
+    word-spacing: 0;
+    vertical-align: middle;
+  }
+
+  &::before {
+    font-size: 12px;
+    vertical-align: middle;
+  }
+}
+.lineb {
+  font-size: 0;
+
+  & > * {
+    display: inline-block;
+    vertical-align: bottom;
+    font-size: 12px;
+  }
+
+  &::after {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 100%;
+    word-spacing: 0;
+    vertical-align: bottom;
+  }
+
+  &::before {
+    font-size: 12px;
+    vertical-align: bottom;
+  }
+}
+.center {
+  text-align: center;
+}
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
+.bold {
+  font-weight: 700;
+}
+.pointer {
+  cursor: pointer;
+}
+.pd8 {
+  padding: 8px;
+}
+
+/* --------------------------------------------------
+ * GRID OPTION
+ * -------------------------------------------------- */
+.vself-start {
+  align-self: start;
+}
+
+.vself-center {
+  align-self: center;
+}
+
+.vself-end {
+  align-self: end;
+}
+
+.hself-left {
+  justify-self: left;
+}
+
+.hself-center {
+  justify-self: center;
+}
+
+.hself-right {
+  justify-self: right;
+}
+
+/* --------------------------------------------------
+ * DISPLAY
+ * -------------------------------------------------- */
+.hidden {
+  display: none !important;
+}
+
+/* --------------------------------------------------
+ * ANIMATION
+ * -------------------------------------------------- */
+@mixin setAnimation($property, $duration, $function, $delay) {
+  -khtml-transition: $property ($duration + s) $function ($delay + s);
+  -moz-transition: $property ($duration + s) $function ($delay + s);
+  -ms-transition: $property ($duration + s) $function ($delay + s);
+  -o-transition: $property ($duration + s) $function ($delay + s);
+  transition: $property ($duration + s) $function ($delay + s);
+}
+
+.anim-loaded {
+  animation-name: anim-loaded;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: backwards;
+}
+
+@keyframes anim-loaded {
+  0% {
+    transform: translateY(20%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+/* --------------------------------------------------
+ * 
+ * -------------------------------------------------- */
+@mixin boxShadow {
+  box-shadow: 0px 2px 4px getColor(gray-6);
+}
+
+@mixin riseFallFontTheme {
+  &.rise {
+    color: getColor(rise);
+  }
+  &.fall {
+    color: getColor(fall);
+  }
+}
+
+@mixin gradient-ultra-violet {
+  background: #654ea3; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #eaafc8, #654ea3); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #eaafc8, #654ea3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+/* --------------------------------------------------
+ * Align
+ * -------------------------------------------------- */
+@mixin flexAlign($tb, $lr) {
+  display: flex;
+  align-items: $tb;
+  justify-content: $lr;
+}
+
+/* --------------------------------------------------
+ * Mobile, Tablet, Desktop media query
+ * -------------------------------------------------- */
+$breakpoint-mobile: 335px;
+$breakpoint-tablet: 758px;
+$breakpoint-desktop: 1024px;
+
+@mixin mobile {
+  @media (min-width: #{$breakpoint-mobile}) and (max-width: #{$breakpoint-tablet - 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$breakpoint-tablet}) and (max-width: #{$breakpoint-desktop - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$breakpoint-desktop}) {
+    @content;
+  }
+}

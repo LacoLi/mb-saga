@@ -1,0 +1,10 @@
+[Unit]
+Description=rocketcher web service
+
+[Service]
+Type=simple
+ExecStart=<al-zal-ddak>
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

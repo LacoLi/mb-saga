@@ -1,0 +1,26 @@
+{
+  "name": "server-rocketcher-customize",
+  "packageManager": "yarn@3.2.3",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "----- Web Server -----": "",
+    "web-start": "cd packages/web-server && react-scripts start",
+    "web-build": "docker build -f packages/web-server/Dockerfile . -t rocketcher-web:0.0.1",
+    "----- Back Server -----": "",
+    "back-start": "cd packages/back-server && nodemon --exec ts-node src/index.ts",
+    "back-build": "docker build -f packages/back-server/Dockerfile . -t rocketcher-back:0.0.1",
+    "----- All Server -----": "",
+    "all-start": "docker compose -p rocketcher up -d --build",
+    "all-stop": "docker compose -p rocketcher down --rmi all -v"
+  },
+  "devDependencies": {
+    "express": "^4.18.1",
+    "nodemon": "^2.0.19",
+    "react-scripts": "5.0.1",
+    "sass": "^1.53.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.2"
+  }
+}
