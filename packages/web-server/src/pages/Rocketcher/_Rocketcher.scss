@@ -1,0 +1,108 @@
+[data-page='rocketcher'] {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #230d1b;
+
+  & > .info-card {
+    background-color: white;
+    padding: 4rem;
+    position: absolute;
+    top: 35vh;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 30vw;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+      rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+    & > .mascot {
+      width: 200px;
+      height: 200px;
+      bottom: 0px;
+      right: -70px;
+      position: absolute;
+    }
+
+    & > .wrapper {
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+
+      position: relative;
+      display: grid;
+      grid-template-columns: max-content auto;
+      grid-auto-rows: max-content;
+      gap: 10px;
+      column-gap: 20px;
+
+      & > em {
+        font-size: 1.8rem;
+        color: getColor(gray-7);
+
+        &.username {
+          font-size: 2.5rem;
+          font-weight: bolder;
+          grid-column: span 2;
+          text-align: center;
+          color: getColor(gray-9);
+        }
+
+        &.title {
+          grid-column: span 2;
+          font-weight: bold;
+          font-size: 2.2rem;
+          color: getColor(gold-5);
+          padding-top: 10px;
+
+          display: grid;
+          grid-template-columns: max-content auto;
+          gap: 10px;
+          align-items: center;
+        }
+
+        &.header {
+          font-weight: bold;
+          color: getColor(gray-8);
+        }
+
+        &.alive {
+          color: getColor(lime-7);
+        }
+
+        &.death {
+          color: getColor(red-5);
+        }
+      }
+    }
+  }
+}
+
+.mint-grad-bg {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to right, #58bae8, #4ede95);
+}
+
+@media (max-width: 1200px) {
+  html {
+    font-size: 9px;
+  }
+
+  [data-page='main'] {
+    & > .info-card {
+      padding: 3rem;
+      top: 20vh;
+      width: 80vw;
+      height: 60vh;
+
+      & > .mascot {
+        width: 100px;
+        height: 100px;
+        bottom: 0px;
+        right: 0px;
+      }
+    }
+  }
+}

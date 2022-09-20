@@ -1,5 +1,5 @@
 {
-  "name": "server-rocketcher-customize",
+  "name": "server-mb-saga",
   "packageManager": "yarn@3.2.3",
   "workspaces": [
     "packages/*"
@@ -7,13 +7,13 @@
   "scripts": {
     "----- Web Server -----": "",
     "web-start": "cd packages/web-server && react-scripts start",
-    "web-build": "docker build -f packages/web-server/Dockerfile . -t rocketcher-web:0.0.1",
+    "web-build": "docker build -f packages/web-server/Dockerfile . -t mb-saga-web:0.0.1",
     "----- Back Server -----": "",
     "back-start": "cd packages/back-server && nodemon --exec ts-node src/index.ts",
-    "back-build": "docker build -f packages/back-server/Dockerfile . -t rocketcher-back:0.0.1",
+    "back-build": "docker build -f packages/back-server/Dockerfile . -t mb-saga-back:0.0.1",
     "----- All Server -----": "",
-    "all-start": "docker compose -p rocketcher up -d --build",
-    "all-stop": "docker compose -p rocketcher down --rmi all -v"
+    "all-start": "docker compose -p mb-saga up -d --build",
+    "all-stop": "docker compose -p mb-saga down --rmi all -v"
   },
   "devDependencies": {
     "express": "^4.18.1",

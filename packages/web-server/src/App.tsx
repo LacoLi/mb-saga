@@ -10,6 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Pages.Main />} />
         <Route path="/mb-saga" element={<Pages.MBSaga />} />
+        <Route path="/rocketcher/:username" element={<Pages.Rocketcher />} />
       </Routes>
     </div>
   );

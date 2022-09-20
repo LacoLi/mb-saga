@@ -10998,9 +10998,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"server-rocketcher-customize@workspace:.":
+"server-mb-saga@workspace:.":
   version: 0.0.0-use.local
-  resolution: "server-rocketcher-customize@workspace:."
+  resolution: "server-mb-saga@workspace:."
   dependencies:
     express: ^4.18.1
     nodemon: ^2.0.19

@@ -11,4 +11,4 @@ services:
       dockerfile: ./packages/back-server/Dockerfile
       context: .
     ports:
-      - 6666:6666
+      - 666:666
