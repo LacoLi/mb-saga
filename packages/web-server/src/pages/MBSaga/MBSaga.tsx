@@ -125,7 +125,7 @@ function MBSaga(props: MBSagaProps) {
             })}
         </ul>
       </header>
-      <div className="title best">{`[${mbIdx}] ${mbData.title}`}</div>
+      <div className="title">{`[${mbIdx}] ${mbData.title}`}</div>
       <article>
         <div className={classNames('speak-player', !mbPlayer ? 'stop' : '')} onClick={() => setMbPlayer(!mbPlayer)}></div>
         <div className="main-box">
