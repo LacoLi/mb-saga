@@ -108,7 +108,15 @@ function MBSaga(props: MBSagaProps) {
             })
             .map((v, i) => {
               return (
-                <li key={i} onClick={() => handleListClick(v, i)}>
+                <li
+                  key={i}
+                  onClick={() =>
+                    handleListClick(
+                      v,
+                      mbList.findIndex((vv, ii) => vv.title === v.title),
+                    )
+                  }
+                >
                   <span>{`${mbList.findIndex((vv, ii) => vv.title === v.title)}`}</span>
                   <span>{`${v.title}`}</span>
                   <span>{`${Util.format.date(v.date, 'Y-M-D')}`}</span>
