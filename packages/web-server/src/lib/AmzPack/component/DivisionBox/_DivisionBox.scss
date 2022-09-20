@@ -1,0 +1,15 @@
+[data-special='divisionBox'] {
+  display: grid;
+  width: inherit;
+  height: inherit;
+
+  &.inner-vertical-align > * {
+    display: grid;
+    align-items: center;
+  }
+
+  &.inner-horizon-align > * {
+    display: grid;
+    align-items: center;
+  }
+}
