@@ -87,6 +87,44 @@ namespace Util {
     const rmFirstZero = (str: string) => {
       return new RegExp(/^[0]*$/).test(str) ? '0' : str.replace(/^0+/, '');
     };
+    /**
+     * 날짜를 format에 맞춰 반환한다
+     * @param data 날짜 데이타 (Date | number | undefined)
+     * @param format 지정할 포맷 'Y-M-D' (string)
+     * @param leftPad 좌측 0 포함 여부 (boolean | undefined)
+     * @returns
+     */
+    export const date = (date: Date | number | undefined, format: string, leftPad: boolean = true) => {
+      if (!!date) {
+        const tempDate = typeof date === 'number' ? new Date(date) : date;
+        const year = `${tempDate.getFullYear()}`;
+        const month = `${leftPad ? `0${tempDate.getMonth() + 1}`.slice(-2) : tempDate.getMonth() + 1}`;
+        const day = `${leftPad ? `0${tempDate.getDate()}`.slice(-2) : tempDate.getDate()}`;
+
+        return format.replaceAll('Y', year).replaceAll('M', month).replaceAll('D', day);
+      } else {
+        return '';
+      }
+    };
+    /**
+     * 시간을 format에 맞춰 반환한다
+     * @param data 날짜 데이타 (Date | number | undefined)
+     * @param format 지정할 포맷 'H-M-S' (string)
+     * @param leftPad 좌측 0 포함 여부 (boolean | undefined)
+     * @returns
+     */
+    export const time = (date: Date | number | undefined, format: string, leftPad: boolean = true) => {
+      if (!!date) {
+        const tempDate = typeof date === 'number' ? new Date(date) : date;
+        const hour = `${leftPad ? `0${tempDate.getHours()}`.slice(-2) : tempDate.getHours()}`;
+        const min = `${leftPad ? `0${tempDate.getMinutes()}`.slice(-2) : tempDate.getMinutes()}`;
+        const sec = `${leftPad ? `0${tempDate.getSeconds()}`.slice(-2) : tempDate.getSeconds()}`;
+
+        return format.replaceAll('H', hour).replaceAll('M', min).replaceAll('S', sec);
+      } else {
+        return '';
+      }
+    };
   }
 
   /* ==========
