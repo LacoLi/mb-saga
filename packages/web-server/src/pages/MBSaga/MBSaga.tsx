@@ -9,11 +9,12 @@
 import React from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import ANT_DEN from '../../resource/sound/ant-den.mp3';
-import { MB_NA, IMBData } from '../../common/const/mb';
+import { MB_NA, IMBData } from '../../common/const/mb-me';
 import Util from '../../common/util';
 import classNames from 'classnames';
 import MB_PROFILE from '../../resource/image/gmb-profile.png';
 import MB_ART_02 from '../../resource/image/mb-art-02.png';
+import { useParams } from 'react-router-dom';
 
 interface MBSagaProps {}
 
@@ -28,17 +29,24 @@ function MBSaga(props: MBSagaProps) {
   /* ――――――――――――――― Variable ――――――――――――――― */
   /* ===== Props ===== */
   const {} = props;
+  const { id } = useParams();
+
+  /* ===== Const ===== */
   const mbList = [...MB_NA];
+
   /* ===== State ===== */
   const [searchOption, setSearchOption] = React.useState<{
     type: searchType;
     text: string;
   }>({ type: searchType.ALL, text: '' });
-  const [mbIdx, setMbIdx] = React.useState<number>(Math.floor(Math.random() * mbList.length));
+  const [mbIdx, setMbIdx] = React.useState<number>(!!id ? Number(id) : Math.floor(Math.random() * mbList.length));
   const [mbData, setMbData] = React.useState<IMBData>(mbList[mbIdx]);
   const [mbHidden, setMbHidden] = React.useState<boolean>(false);
   const [mbPlayer, setMbPlayer] = React.useState<boolean>(false);
-  /* ===== Const ===== */
+
+  /* ===== Ref ===== */
+  const ref = React.useRef<HTMLDivElement>(null);
+
   /* ====== API ====== */
 
   /* ―――――――――――――――― Method ―――――――――――――――― */
@@ -48,6 +56,7 @@ function MBSaga(props: MBSagaProps) {
   const handleListClick = (v: IMBData, i: number) => {
     setMbIdx(i);
     setMbData(v);
+    if (!!ref.current) ref.current.scrollTo({ top: 0, behavior: 'smooth' });
   };
   const speakGodMBText = () => {
     //if (typeof SpeechSynthesisUtterance === 'undefined' || typeof window.speechSynthesis === 'undefined') {
@@ -132,7 +141,7 @@ function MBSaga(props: MBSagaProps) {
         <div className={classNames('speak-player', !mbPlayer ? 'stop' : '')} onClick={() => setMbPlayer(!mbPlayer)}></div>
         <div className="main-box">
           <img src={MB_ART_02} alt="GOD MB" />
-          <div className="main-box-wrap">
+          <div className="main-box-wrap" ref={ref}>
             <div className="date">{`${Util.format.date(mbData.date, 'Y-M-D')}`}</div>
             <div className="contents">{`${mbData.contents}`}</div>
           </div>

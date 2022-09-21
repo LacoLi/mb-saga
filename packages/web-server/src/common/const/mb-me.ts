@@ -11,7 +11,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `...`,
     tag: [],
-    date: new Date('2012.9.17'),
+    date: new Date(2012, 9, 17),
     contents: `여러분이 제 글을 읽으면서
 
         즐거움을 느꼈을지도 모르지요
@@ -114,7 +114,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `..? 쪽지로 누가 보냈었네...`,
     tag: [],
-    date: new Date('2012.9.17'),
+    date: new Date(2012, 9, 17),
     contents: `죄송합니다. 제가 쪽지 확인을 이제야 했네요 
 
  
@@ -124,7 +124,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `TV`,
     tag: [],
-    date: new Date('2012.9.6'),
+    date: new Date(2012, 9, 6),
     contents: `TV
 
     http://www.youtube.com/watch?v=8iSqRQZYJcs
@@ -302,7 +302,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `Wedding Dress`,
     tag: [],
-    date: new Date('2012.11.25'),
+    date: new Date(2012, 11, 25),
     contents: `솔직히 지금 저에겐  
 
     진심으로 터놓을 수 있는  
@@ -2265,7 +2265,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `가볍게 첫 시작은 자기소개`,
     tag: [],
-    date: new Date('2012.8.13'),
+    date: new Date(2012, 8, 13),
     contents: `소수에게 법무부 블로그 기자단 명함을 통해 번호와 주소를 알려줬으니 몇분은 찾아 오겠지만
 
     (소수의 기준은 당연히 제게 의미있는 분들이지요ㅎㅎ)
@@ -2323,7 +2323,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `검소하다`,
     tag: [],
-    date: new Date('2012.9.22'),
+    date: new Date(2012, 9, 22),
     contents: `검소하다
 
     사치하지 않고 꾸밈없이 순수하다
@@ -2463,7 +2463,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `길거리`,
     tag: [],
-    date: new Date('2012.8.29'),
+    date: new Date(2012, 8, 29),
     contents: `길거리...
 
 
@@ -3000,7 +3000,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `나`,
     tag: [],
-    date: new Date('2012.9.12'),
+    date: new Date(2012, 9, 12),
     contents: `2012-09-12
     수요일이다~ ㅎㅎ
     
@@ -3535,7 +3535,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `나란 남자...`,
     tag: [],
-    date: new Date('2012.8.25'),
+    date: new Date(2012, 8, 25),
     contents: `알다가도 모르겠지요?
 
     어떨땐 한없이 순수해보여서
@@ -3615,7 +3615,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `나에겐 과분한 기대`,
     tag: [],
-    date: new Date('2012.10.7'),
+    date: new Date(2012, 10, 7),
     contents: `...
 
     저는 지금까지 살아오면서
@@ -3766,7 +3766,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `나와 내가 바라는 이성의 이상형`,
     tag: [],
-    date: new Date('2012.11.11'),
+    date: new Date(2012, 11, 11),
     contents: `이런다고해서
 
     이런 분을 만날일은 없겠지만(?)
@@ -4105,7 +4105,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `나의 성격?`,
     tag: [],
-    date: new Date('2012.8.13'),
+    date: new Date(2012, 8, 13),
     contents: `성격을 바로 단정지어 말하지 않고, 왜 지금의 성격을 가지게 되었는지  
 
     과거부터 파헤치면서 깊게 알려드릴께요.
@@ -4612,7 +4612,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `나의 이상형?`,
     tag: [],
-    date: new Date('2012.8.17'),
+    date: new Date(2012, 8, 17),
     contents: `태그를 제 이름으로 해놔서
     그걸 통해 오시는 분이 있는 듯 해요 ㅎ
     물론 이렇게 되라고 한거지만
@@ -4783,7 +4783,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `내가 누군가에게 위안을 주었네`,
     tag: [],
-    date: new Date('2012.9.15'),
+    date: new Date(2012, 9, 15),
     contents: `사랑...진심 이란 글은
 
     솔직히
@@ -4878,7 +4878,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `너무 여유로워보이네요?`,
     tag: [],
-    date: new Date('2012.9.17'),
+    date: new Date(2012, 9, 17),
     contents: `어제 올린 글을 보고
 
     제가 당신에게
@@ -4936,7 +4936,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `다른사람들은 나를 어떻게 볼까?`,
     tag: [],
-    date: new Date('2012.8.27'),
+    date: new Date(2012, 8, 27),
     contents: `아... 태풍이라니
 
     당분간 밖에는 못나가겠네
@@ -5253,7 +5253,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `당신에 대한 나의 상태`,
     tag: [],
-    date: new Date('2012.9.19'),
+    date: new Date(2012, 9, 19),
     contents: `여러분은 그사람 이야기한다고
 
     싫어하면 안되요.
@@ -5480,7 +5480,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `당신이란 사람은 정말...`,
     tag: [],
-    date: new Date('2012.9.10'),
+    date: new Date(2012, 9, 10),
     contents: `지금까지 살아오면서
 
     이토록 오랫동안
@@ -5654,7 +5654,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `두달이 지난 지금`,
     tag: [],
-    date: new Date('2012.10.23'),
+    date: new Date(2012, 10, 23),
     contents: `처음 시작은
 
     8월 13일
@@ -5926,7 +5926,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `마음이 좀 풀렸어요`,
     tag: [],
-    date: new Date('2012.9.10'),
+    date: new Date(2012, 9, 10),
     contents: `... 오늘 왜이리 사람이 많이왔지??
 
     슬슬 끝날때 되니까
@@ -6205,7 +6205,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `만나고 싶었던 나의 이상`,
     tag: [],
-    date: new Date('2014.3.19'),
+    date: new Date(2014, 3, 19),
     contents: `대학교 과제물 제출을 위해 글 쓴걸 여기에 올려봐요
 
  
@@ -6241,7 +6241,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `매력`,
     tag: [],
-    date: new Date('2012.8.28'),
+    date: new Date(2012, 8, 28),
     contents: `음... 나의 매력이 뭐일까
 
     솔직히 전 매력있는 남자는
@@ -6451,7 +6451,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `모든것은 나름대로 이유가 있다`,
     tag: [],
-    date: new Date('2012.10.21'),
+    date: new Date(2012, 10, 21),
     contents: `저는 어떤것도 이유없이 일어난건
 
     없다고 생각하고 살아요.
@@ -6763,7 +6763,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `목적`,
     tag: [],
-    date: new Date('2018.10.3'),
+    date: new Date(2018, 10, 3),
     contents: `저는 개인적으로 사람의 의도와 목적을 중요하게 생각하는데요,
  
     목적은 행동을 예측하기 좋은 요소라 믿기 때문입니다.
@@ -6815,7 +6815,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `뭐가 문제일까...`,
     tag: [],
-    date: new Date('2012.9.9'),
+    date: new Date(2012, 9, 9),
     contents: `외모도 단정하고
 
     행실도 바르고
@@ -6872,7 +6872,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `방향`,
     tag: [],
-    date: new Date('2012.9.7'),
+    date: new Date(2012, 9, 7),
     contents: `주말이 다가왔네요
 
     여러분들은 주말에 뭐하시려나?
@@ -7093,7 +7093,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `벌써 이곳도 세달이 지났네?`,
     tag: [],
-    date: new Date('2012.11.18'),
+    date: new Date(2012, 11, 18),
     contents: `8.13일에 시작해서
 
     며칠전에 세달을 넘겼네요.
@@ -7174,7 +7174,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `변함없이 지내주세요`,
     tag: [],
-    date: new Date('2012.10.23'),
+    date: new Date(2012, 10, 23),
     contents: `오늘은 기대를 조금했는데
 
     오늘도 다가오지 못하네요...
@@ -7350,7 +7350,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `변화`,
     tag: [],
-    date: new Date('2012.10.15'),
+    date: new Date(2012, 10, 15),
     contents: `...
 
     내게 용기를 내어
@@ -7515,7 +7515,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `블로그 생활 시작(?)`,
     tag: [],
-    date: new Date('2012.8.13'),
+    date: new Date(2012, 8, 13),
     contents: `2012년 8/13일  
 
     예전 블로그 제목: 세상을 향한 외침
@@ -7555,7 +7555,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `블로그의 방향?`,
     tag: [],
-    date: new Date('2012. 9. 29'),
+    date: new Date(2012, 9, 29),
     contents: `이 블로그의 매력이 뭘까?
 
     역시 소재가 제 자신인게
@@ -7891,7 +7891,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `비하인드 스토리`,
     tag: [],
-    date: new Date('2013.3.28'),
+    date: new Date(2013, 3, 28),
     contents: `이번 글은
 
     상당히 진지하게 쓸거에요
@@ -8445,7 +8445,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `사람들과 함께 있어왔던 나`,
     tag: [],
-    date: new Date('2013.12.11'),
+    date: new Date(2013, 12, 11),
     contents: `이제 이번주 목요일이면
 
     아마 블로그가 실질적으로
@@ -9698,7 +9698,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `사랑... 일단 기다려요`,
     tag: [],
-    date: new Date('2012.8.24'),
+    date: new Date(2012, 8, 24),
     contents: `2012-08-24 00:03 작성시작
     여지껏 그래왔고
     
@@ -9912,7 +9912,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `사랑... 진심`,
     tag: [],
-    date: new Date('2012.9.8'),
+    date: new Date(2012, 9, 8),
     contents: `어느정도까지 가야
 
     사랑이라고 할 수 있을것 같아?
@@ -10171,7 +10171,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `생각과 마음`,
     tag: [],
-    date: new Date('2012.10.30'),
+    date: new Date(2012, 10, 30),
     contents: `오늘 어땠어요?
 
 
@@ -10582,7 +10582,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `수용`,
     tag: [],
-    date: new Date('2012.10.18'),
+    date: new Date(2012, 10, 18),
     contents: `여기에 글을 쓰면서
 
     새로운 기분을 느끼지만
@@ -10943,7 +10943,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `숨겨진 의미`,
     tag: [],
-    date: new Date('2012. 9. 3'),
+    date: new Date(2012, 9, 3),
     contents: `원래 이걸 맨 처음에 썼어야 했는데
     이제와서 이런 글을 쓰게되서
     여러분에게 너무
@@ -11371,7 +11371,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `슬슬 끝이 보인다`,
     tag: [],
-    date: new Date('2012.9.5'),
+    date: new Date(2012, 9, 5),
     contents: `이 블로그와
 
     많은 사람들과
@@ -11666,13 +11666,13 @@ export const MB_NA: IMBData[] = [
   {
     title: `신분 상승`,
     tag: [],
-    date: new Date('2012.10.20'),
+    date: new Date(2012, 10, 20),
     contents: `이걸로 바꿨습니다 ㅎㅎ`,
   },
   {
     title: `아...`,
     tag: [],
-    date: new Date('2012.9.15'),
+    date: new Date(2012, 9, 15),
     contents: `첫 댓글이네요
 
     감사합니다
@@ -11723,7 +11723,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `안 맞는 사람`,
     tag: [],
-    date: new Date('2012.8.31'),
+    date: new Date(2012, 8, 31),
     contents: `여러분 안녕하세요 ㅎ
 
     오늘도 하나 써야지요
@@ -11949,7 +11949,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `앞으로 이렇게 해볼래요`,
     tag: [],
-    date: new Date('2012.11.8'),
+    date: new Date(2012, 11, 8),
     contents: `크게 4가지 에요.
 
 
@@ -12181,7 +12181,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `애매한 명절`,
     tag: [],
-    date: new Date('2012.9.29'),
+    date: new Date(2012, 9, 29),
     contents: `이번 연휴가 물론 시험이 껴서
 
     안좋은것도 있지만
@@ -12380,7 +12380,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `어떻게 할까...`,
     tag: [],
-    date: new Date('2012.12.25'),
+    date: new Date(2012, 12, 25),
     contents: `원래대로라면 오늘이 마지막이지요
 
 
@@ -12535,7 +12535,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `어제 쓴거 보니까`,
     tag: [],
-    date: new Date('2012.8.14'),
+    date: new Date(2012, 8, 14),
     contents: `어제 쓴 내용들을 다시 보니까 너무 솔직하게 써버린것 같아서 왠지  
 
  
@@ -12579,7 +12579,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `얼음산책`,
     tag: [],
-    date: new Date('2012.9.2'),
+    date: new Date(2012, 9, 2),
     contents: `얼음산책
 
     http://www.youtube.com/watch?v=JQu81BExIOE
@@ -12595,7 +12595,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `여담`,
     tag: [],
-    date: new Date('2012.12.31'),
+    date: new Date(2012, 12, 31),
     contents: `오늘이 2012년 마지막날이네요
 
 
@@ -12849,7 +12849,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `여전히 댓글은 없구나아...`,
     tag: [],
-    date: new Date('2012.9.6'),
+    date: new Date(2012, 9, 6),
     contents: `그날까지 이제 일주일 남았습니다.
 
     기분이 풀어져서
@@ -12907,7 +12907,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `예전 글 되돌아보기`,
     tag: [],
-    date: new Date('2012.9.20'),
+    date: new Date(2012, 9, 20),
     contents: `오늘은 지금까지의 글들을 다시 되돌아보는 시간을 가져봅시다
 
  
@@ -15227,7 +15227,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `오늘 오시는 분은 무슨 생각이시지?`,
     tag: [],
-    date: new Date('2012.9.14'),
+    date: new Date(2012, 9, 14),
     contents: `누군가가 달았을까
 
     혹시 몰라 확인하나?
@@ -15281,7 +15281,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `외로움`,
     tag: [],
-    date: new Date('2012.8.19'),
+    date: new Date(2012, 8, 19),
     contents: `2012-08-19 19:59 작성시작
     엄밀히 말하자면
     제가 외롭다는 것을 안게
@@ -15456,7 +15456,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `이거 참... 같이 고민해보죠`,
     tag: [],
-    date: new Date('2012.9.17'),
+    date: new Date(2012, 9, 17),
     contents: `어느분이 제게 쪽지로
 
  
@@ -16076,7 +16076,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `이런거 처음해본다 ㅎㅎ`,
     tag: [],
-    date: new Date('2012.9.17'),
+    date: new Date(2012, 9, 17),
     contents: `누군가의 깊은 고민을 이렇게 깊게 들어주고 
 
  
@@ -16166,7 +16166,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `이루어지기엔 아직 먼 거리`,
     tag: [],
-    date: new Date('2012.10.24'),
+    date: new Date(2012, 10, 24),
     contents: `어제 제 마음이 잘 전해졌나봐요.
 
 
@@ -16350,7 +16350,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `이번 크리스마스도 솔로인건가?`,
     tag: [],
-    date: new Date('2012.12.24'),
+    date: new Date(2012, 12, 24),
     contents: `아...
 
     나보다 더 못난애들도
@@ -16510,7 +16510,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `인연일까?`,
     tag: [],
-    date: new Date('2012.9.16'),
+    date: new Date(2012, 9, 16),
     contents: `당신은 절 언제부터 봤어요?
 
     아마 1학년때였던것 같은데
@@ -16756,7 +16756,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `작별?`,
     tag: [],
-    date: new Date('2012.9.12'),
+    date: new Date(2012, 9, 12),
     contents: `시기상 오늘 하는게 나을 것 같다
 
     내일이 마지막일지도 모르니깐...
@@ -17010,7 +17010,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `작별이라는 말이 마음에 걸리긴 했는데`,
     tag: [],
-    date: new Date('2012.10.20'),
+    date: new Date(2012, 10, 20),
     contents: `잘 생각해봐요 
 
  
@@ -17498,7 +17498,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `잘 봤어요. 당신의 진심을`,
     tag: [],
-    date: new Date('2012.10.10'),
+    date: new Date(2012, 10, 10),
     contents: `이제 내일부터 시험시작이네요.
 
 
@@ -17690,7 +17690,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `잘됬다니 정말 다행이다`,
     tag: [],
-    date: new Date('2012.9.20'),
+    date: new Date(2012, 9, 20),
     contents: `감사합니다. 
 
     지금 계속 학교 같이 다니고있고!
@@ -17734,7 +17734,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `잠시 그분에게 말좀할께요`,
     tag: [],
-    date: new Date('2012.9.4'),
+    date: new Date(2012, 9, 4),
     contents: `지금 제가 무척이나 심각하기 때문에 
 
  
@@ -18195,7 +18195,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `잠시동안 이별`,
     tag: [],
-    date: new Date('2012.11.30'),
+    date: new Date(2012, 11, 30),
     contents: `그분이랑 관계가
 
     영 시원치않은 시점에서
@@ -18456,7 +18456,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `재능?`,
     tag: [],
-    date: new Date('2012.9.22'),
+    date: new Date(2012, 9, 22),
     contents: `솔직히 저는
 
     머리가 나쁘진 않은것 같아요.
@@ -18733,7 +18733,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `저 많이 부족해요`,
     tag: [],
-    date: new Date('2012.8.26'),
+    date: new Date(2012, 8, 26),
     contents: `혹시나 해서 그러는데
 
  
@@ -19339,7 +19339,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `저는 괜찮은거 알죠?`,
     tag: [],
-    date: new Date('2012.10.8'),
+    date: new Date(2012, 10, 8),
     contents: `물론 주말내내 슬프게 지냈었지만 
 
  
@@ -19453,7 +19453,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `저를 사랑하고 있는 당신을 위해`,
     tag: [],
-    date: new Date('2012.8.17'),
+    date: new Date(2012, 8, 17),
     contents: `2012-08-17 21:36 작성시작
     저에게 관심있는 사람중에
     제 호감을 사기위해서
@@ -19642,7 +19642,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `저를 위해 도와주지 않을래요?`,
     tag: [],
-    date: new Date('2012.9.23'),
+    date: new Date(2012, 9, 23),
     contents: `제 글을 처음부터
 
     차근차근 읽어오셨다면
@@ -19769,7 +19769,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `정말 소설같은 이야기다`,
     tag: [],
-    date: new Date('2012.10.26'),
+    date: new Date(2012, 10, 26),
     contents: `정말 생각하면 할수록
 
     믿기힘든일이
@@ -20322,7 +20322,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `지극히 개인적인 취향`,
     tag: [],
-    date: new Date('2017.9.17'),
+    date: new Date(2017, 9, 17),
     contents: `저
 
     볼에 살 있는 여자 좋아해요
@@ -20510,7 +20510,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `직업`,
     tag: [],
-    date: new Date('2012.10.2'),
+    date: new Date(2012, 10, 2),
     contents: `흐음...
 
     직업을 뭐로하면 좋을까
@@ -20658,7 +20658,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `진지하게 생각해봤는데`,
     tag: [],
-    date: new Date('2012.8.20'),
+    date: new Date(2012, 8, 20),
     contents: `... 이 블로그활동이
     나에게 어떠한 영향을 주고
     사람들에게 어떠한 영향을 줄지
@@ -20826,7 +20826,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `처음으로 공감 받았네요 ㅎㅎ`,
     tag: [],
-    date: new Date('2012.10.14'),
+    date: new Date(2012, 10, 14),
     contents: `null이라는 분이 처음으로 제 글에 공감을 눌러주셨네요? 
 
     프로필 내용이 죄다 비공개라 막연하지만
@@ -20859,7 +20859,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `추억`,
     tag: [],
-    date: new Date('2012.12.25'),
+    date: new Date(2012, 12, 25),
     contents: `원래는 단순히 법무부 기사 제출만을 하려고 만든 블로그였지만,
  
 
@@ -25654,7 +25654,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `하아... 미안해요`,
     tag: [],
-    date: new Date('2012.9.9'),
+    date: new Date(2012, 9, 9),
     contents: `여러분에게 미안한게 너무 많네요
 
     제 본심을 너무 솔직하게 적어서
@@ -25781,7 +25781,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `한분`,
     tag: [],
-    date: new Date('2012.9.1'),
+    date: new Date(2012, 9, 1),
     contents: `오늘은 한분이 오셨네요
 
     저녁에 더 안들어오려나
@@ -25872,7 +25872,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `한시간 반 뒤면 크리스마스다`,
     tag: [],
-    date: new Date('2012.12.24'),
+    date: new Date(2012, 12, 24),
     contents: `뭐... 크게 뭔가 할 일이 있는건 아니지만
 
     그래도 크리스마스잖아요?
@@ -25882,7 +25882,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `회상`,
     tag: [],
-    date: new Date('2012.10.31'),
+    date: new Date(2012, 10, 31),
     contents: `개인적인, 평소에는 아무에게도 말하지 않았던 지극히 개인적인 이야기를 그냥 터놓고 써보고 싶다는 생각이 갑자기 들어서,
 
  
@@ -31417,7 +31417,7 @@ export const MB_NA: IMBData[] = [
   {
     title: `ㅠㅠ`,
     tag: [],
-    date: new Date('2012.9.15'),
+    date: new Date(2012, 9, 15),
     contents: `오늘 달린 댓글이
 
     정말 줄곧 함께한 분이
