@@ -12,6 +12,8 @@ import ANT_DEN from '../../resource/sound/ant-den.mp3';
 import { MB_NA, IMBData } from '../../common/const/mb';
 import Util from '../../common/util';
 import classNames from 'classnames';
+import MB_PROFILE from '../../resource/image/gmb-profile.png';
+import MB_ART_02 from '../../resource/image/mb-art-02.png';
 
 interface MBSagaProps {}
 
@@ -32,8 +34,8 @@ function MBSaga(props: MBSagaProps) {
     type: searchType;
     text: string;
   }>({ type: searchType.ALL, text: '' });
-  const [mbIdx, setMbIdx] = React.useState<number>(0);
-  const [mbData, setMbData] = React.useState<IMBData>(mbList[Math.floor(Math.random() * mbList.length)]);
+  const [mbIdx, setMbIdx] = React.useState<number>(Math.floor(Math.random() * mbList.length));
+  const [mbData, setMbData] = React.useState<IMBData>(mbList[mbIdx]);
   const [mbHidden, setMbHidden] = React.useState<boolean>(false);
   const [mbPlayer, setMbPlayer] = React.useState<boolean>(false);
   /* ===== Const ===== */
@@ -48,9 +50,9 @@ function MBSaga(props: MBSagaProps) {
     setMbData(v);
   };
   const speakGodMBText = () => {
-    if (typeof SpeechSynthesisUtterance === 'undefined' || typeof window.speechSynthesis === 'undefined') {
-      return;
-    }
+    //if (typeof SpeechSynthesisUtterance === 'undefined' || typeof window.speechSynthesis === 'undefined') {
+    //  return;
+    //}
 
     window.speechSynthesis.cancel(); // 현재 읽고있다면 초기화
 
@@ -129,6 +131,7 @@ function MBSaga(props: MBSagaProps) {
       <article>
         <div className={classNames('speak-player', !mbPlayer ? 'stop' : '')} onClick={() => setMbPlayer(!mbPlayer)}></div>
         <div className="main-box">
+          <img src={MB_ART_02} alt="GOD MB" />
           <div className="date">{`${Util.format.date(mbData.date, 'Y-M-D')}`}</div>
           <div className="contents">{`${mbData.contents}`}</div>
         </div>
