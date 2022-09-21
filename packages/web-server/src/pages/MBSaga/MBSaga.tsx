@@ -132,8 +132,10 @@ function MBSaga(props: MBSagaProps) {
         <div className={classNames('speak-player', !mbPlayer ? 'stop' : '')} onClick={() => setMbPlayer(!mbPlayer)}></div>
         <div className="main-box">
           <img src={MB_ART_02} alt="GOD MB" />
-          <div className="date">{`${Util.format.date(mbData.date, 'Y-M-D')}`}</div>
-          <div className="contents">{`${mbData.contents}`}</div>
+          <div className="main-box-wrap">
+            <div className="date">{`${Util.format.date(mbData.date, 'Y-M-D')}`}</div>
+            <div className="contents">{`${mbData.contents}`}</div>
+          </div>
         </div>
       </article>
     </div>
