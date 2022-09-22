@@ -21,4 +21,7 @@ services:
       POSTGRES_USER: "lacolico"
       POSTGRES_PASSWORD: "1q2w3e4r!"
     volumes:
-      - ./postgresql/data/:/var/lib/postgresql/data
+      - pgPersistence:/var/lib/postgresql
+volumes:
+  pgPersistence:
+    external: true
