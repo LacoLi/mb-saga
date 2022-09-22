@@ -12,3 +12,13 @@ services:
       context: .
     ports:
       - 666:666
+
+  db:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "lacolico"
+      POSTGRES_PASSWORD: "1q2w3e4r!"
+    volumes:
+      - ./postgresql/data/:/var/lib/postgresql/data
