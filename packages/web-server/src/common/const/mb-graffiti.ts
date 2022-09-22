@@ -1998,8 +1998,9 @@ export const MB_NA: IMBData[] = [
   },
   {
     title: `2018.03.24`,
-    tag: [Tag.KIMO],
+    tag: [Tag.DELUSION, Tag.KIMO],
     date: new Date(2018, 3, 24),
+    highlight: `잠시 애인 날개 좀 접어주고...`,
     contents: `요즘 정말 심각하다고 느끼는 게
  
  
@@ -8780,7 +8781,7 @@ export const MB_NA: IMBData[] = [
     title: `내일 쓸게요`,
     tag: [Tag.FORBIDDEN_LOVE, Tag.CRIME, Tag.HENTAI, Tag.KIMO],
     date: new Date(2012, 11, 16),
-    summary: `밧줄`,
+    highlight: `밧줄`,
     contents: `요즘 덜 자서
 
     졸려요
@@ -9550,7 +9551,7 @@ export const MB_NA: IMBData[] = [
     title: `다시 왔어요~!`,
     tag: [Tag.DELUSION, Tag.KIMO, Tag.GAY],
     date: new Date(2012, 8, 23),
-    summary: `원래 여자분들이 자기를 잘 드러내려하지 않는다는건 알고있어요.
+    highlight: `원래 여자분들이 자기를 잘 드러내려하지 않는다는건 알고있어요.
     제가 생긴거며 행동하는게 보통애들이랑 다르잖아요?
     진짜 제발 없으면 좋겠다. 남자한테 관심 전혀없어요.`,
     contents: `다시 왔어요 ㅎㅎ
@@ -9782,7 +9783,7 @@ export const MB_NA: IMBData[] = [
     title: `당신을 만날 수 있어서 좋아요`,
     tag: [Tag.FORBIDDEN_LOVE, Tag.KIMO, Tag.VIOLENCE],
     date: new Date(2012, 11, 3),
-    summary: `당신을 바라보더니 제 입맛이 살아났어요, 좋아해요ㅎㅎ`,
+    highlight: `당신을 바라보더니 제 입맛이 살아났어요, 좋아해요ㅎㅎ`,
     contents: `지금은 시간이 꽤 지나서
 
     기억을 못할지도 모르겠지만
@@ -10181,7 +10182,7 @@ export const MB_NA: IMBData[] = [
     title: `당신이 결정하세요`,
     tag: [Tag.FORBIDDEN_LOVE, Tag.ENGLISH],
     date: new Date(2012, 11, 29),
-    summary: `저는 당신을 기다리지 않고 당신 말고 다른 분을 찾아볼꺼에요.
+    highlight: `저는 당신을 기다리지 않고 당신 말고 다른 분을 찾아볼꺼에요.
     선택해요 붙잡거나 그냥 바라보거나 당신의 미래를 스스로 결정하세요`,
     contents: `여러분들과의 인사는
 
@@ -10867,7 +10868,7 @@ export const MB_NA: IMBData[] = [
     title: `뭘 쓰면 좋을까...`,
     tag: [Tag.FORBIDDEN_LOVE, Tag.KIMO],
     date: new Date(2012, 9, 17),
-    summary: `에효, 어쨰 전 여기서 한번도 이긴적이 없네요`,
+    highlight: `에효, 어쨰 전 여기서 한번도 이긴적이 없네요`,
     contents: `어떤걸 쓰면 좋을까요?
 
 
@@ -12129,7 +12130,7 @@ export const MB_NA: IMBData[] = [
     title: `빼빼로`,
     tag: [Tag.FORBIDDEN_LOVE, Tag.KIMO, Tag.MICHINNOM],
     date: new Date(2012, 11, 13),
-    summary: `다가와봐요 당신이라면 충분히 절 가질 수 있으니까`,
+    highlight: `다가와봐요 당신이라면 충분히 절 가질 수 있으니까`,
     contents: `빼빼로 받고싶었는데
 
     못받았다...
@@ -12354,7 +12355,7 @@ export const MB_NA: IMBData[] = [
     title: `살고싶어요`,
     tag: [Tag.FORBIDDEN_LOVE, Tag.CRIME, Tag.KIMO, Tag.VIOLENCE, Tag.MICHINNOM],
     date: new Date(2012, 11, 24),
-    summary: `살려주세요 당신에게 약간의 자비가 있다면 당신이 저를 좋아한다면 지금 이순간까지 버텨준 절 붙잡아주셔야되요`,
+    highlight: `살려주세요 당신에게 약간의 자비가 있다면 당신이 저를 좋아한다면 지금 이순간까지 버텨준 절 붙잡아주셔야되요`,
     contents: `당신이 모른다고 말했을때부터
 
     저는 죽어가고있어요
@@ -12743,7 +12744,7 @@ export const MB_NA: IMBData[] = [
     title: `상황 정리`,
     tag: [Tag.FORBIDDEN_LOVE, Tag.VIOLENCE, Tag.MICHINNOM, Tag.MUCHIN_MUCHIN_MUCHIN_MUCHIN],
     date: new Date(2013, 4, 21),
-    summary: `그럼 왜 그런건지를 알아내는거였어요 
+    highlight: `그럼 왜 그런건지를 알아내는거였어요 
     그래서 만나서 대화를 하자고 그래서 지금까지의 의문을 없애고 깔끔하게 정리하자고 제안했어요
     ...
     그럼 그냥 명빈이가 아직도 너 좋아하고 있다고좀 전해주세요`,
@@ -13271,7 +13272,7 @@ export const MB_NA: IMBData[] = [
     title: `새로운 시작`,
     tag: [Tag.DELUSION, Tag.MICHINNOM, Tag.MUCHIN_MUCHIN_MUCHIN_MUCHIN],
     date: new Date(2013, 3, 4),
-    summary: `아니, 처음으로 수업을 받아보는 선생님들조차 눈빛이 예사롭지 않아...
+    highlight: `아니, 처음으로 수업을 받아보는 선생님들조차 눈빛이 예사롭지 않아...
     그럼 지금까지 일들을 다 알고 있다는..?
     
     다들 제가 누군지도 알고 있고 처음부터 호감 갖고 시작하고 몰라도 되는걸 다들 알고있고 ... 그런거죠?`,
@@ -14197,7 +14198,7 @@ export const MB_NA: IMBData[] = [
     title: `어제는 덜 지루했겠지?`,
     tag: [Tag.DELUSION, Tag.MICHINNOM, Tag.KIMO],
     date: new Date(2013, 5, 18),
-    summary: `'명빈이는 내 남친!'`,
+    highlight: `'명빈이는 내 남친!'`,
     contents: `어? 명빈이의 손금?
 
 
@@ -14437,7 +14438,7 @@ export const MB_NA: IMBData[] = [
     title: `여러분은 고민 없나요?`,
     tag: [Tag.DELUSION, Tag.MICHINNOM, Tag.KIMO],
     date: new Date(2012, 9, 17),
-    summary: `혹시 여러분 고민이
+    highlight: `혹시 여러분 고민이
     저랑 사귀는 거에요?`,
     contents: `고민같은거 올리면
 
@@ -14532,7 +14533,7 @@ export const MB_NA: IMBData[] = [
     title: `여섯 `,
     tag: [Tag.FORBIDDEN_LOVE, Tag.VIOLENCE],
     date: new Date(2012, 10, 19),
-    summary: `좋아하는 만큼
+    highlight: `좋아하는 만큼
     많이 미워하고 있으니
     처신을 잘하세요.`,
     contents: `오늘 방문자의 숫자는 여섯 
@@ -15842,7 +15843,7 @@ export const MB_NA: IMBData[] = [
     title: `이 블로그의 본질`,
     tag: [Tag.KIMO],
     date: new Date(2017, 9, 13),
-    summary: `사실 이 블로그는 실질적으로 (...) “이런 남자인데 저랑 사귈래요?” 하며 구애하기 위해 만든 블로그이죠. `,
+    highlight: `사실 이 블로그는 실질적으로 (...) “이런 남자인데 저랑 사귈래요?” 하며 구애하기 위해 만든 블로그이죠. `,
     contents: `사실 이 블로그는 실질적으로
 
  
@@ -17364,7 +17365,7 @@ export const MB_NA: IMBData[] = [
     title: `지금까지 나온 예문`,
     tag: [Tag.FORBIDDEN_LOVE, Tag.ENGLISH, Tag.DELUSION, Tag.KIMO, Tag.MICHINNOM],
     date: new Date(2012, 11, 2),
-    summary: `handsome boy`,
+    highlight: `handsome boy`,
     contents: `오늘은 활기차시네요? ㅎㅎ
 
 
@@ -18139,7 +18140,7 @@ export const MB_NA: IMBData[] = [
     title: `컨디션이 안좋을때 뭐하냐구요? `,
     tag: [Tag.JIRAL],
     date: new Date(2012, 11, 7),
-    summary: `다양하게 접다보면서 머리가 조금 좋아진것일지도 몰라요.`,
+    highlight: `다양하게 접다보면서 머리가 조금 좋아진것일지도 몰라요.`,
     contents: `음
 
 
@@ -18539,7 +18540,7 @@ export const MB_NA: IMBData[] = [
     title: `허전함`,
     tag: [Tag.FORBIDDEN_LOVE, Tag.MICHINNOM],
     date: new Date(2012, 12, 20),
-    summary: `ㅂ...부왘`,
+    highlight: `ㅂ...부왘`,
     contents: `시험 끝난 뒤에 오는 첫날은
 
     서술형 확인하는 날이에요

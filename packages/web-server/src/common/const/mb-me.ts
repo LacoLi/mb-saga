@@ -14,11 +14,27 @@ export const enum Tag {
   JIRAL = '지랄',
 }
 
+export let TagColor: { [key in Tag]: string } = {
+  범죄: '#5A5A5A',
+  변태: '#8748E1',
+  키모: '#AB8212',
+  '금지된 사랑': '#FF4848',
+  '오그리 토그리': '#FAED7D',
+  잉글리쉬: '#A6A6A6',
+  크리스마스: '#74D36D',
+  폭력적인: '#DB0000',
+  망상: '#B2EBF4',
+  게이: '#FF00DD',
+  미친놈: '#FAED7D',
+  무7련: '#D4F4FA',
+  지랄: '#F6F6F6',
+};
+
 export interface IMBData {
   title: string;
   tag: Tag[];
   date: Date;
-  summary?: string;
+  highlight?: string;
   contents: string;
 }
 
