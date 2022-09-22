@@ -2,7 +2,9 @@
   "name": "back-server",
   "packageManager": "yarn@3.2.3",
   "dependencies": {
-    "express": "^4.17.1"
+    "@types/pg": "^8.6.5",
+    "express": "^4.17.1",
+    "pg": "^8.8.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
