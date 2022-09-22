@@ -17,6 +17,7 @@ function App() {
         <Route path="/bible/twitch/:id" element={<Pages.Twitch />} />
         <Route path="/mb-saga" element={<Pages.MBSaga />} />
         <Route path="/mb-saga/:id" element={<Pages.MBSaga />} />
+        <Route path="/mb-saga/:nav/:id" element={<Pages.MBSaga />} />
         <Route path="/rocketcher/:username" element={<Pages.Rocketcher />} />
       </Routes>
     </div>

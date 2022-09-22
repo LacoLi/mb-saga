@@ -9,7 +9,8 @@
 import React from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import ANT_DEN from '../../resource/sound/ant-den.mp3';
-import { MB_NA, IMBData } from '../../common/const/mb-me';
+import { MB_NA, IMBData, Tag } from '../../common/const/mb-me';
+import { MB_NA as MB_GRAFFITI } from '../../common/const/mb-graffiti';
 import Util from '../../common/util';
 import classNames from 'classnames';
 import MB_PROFILE from '../../resource/image/gmb-profile.png';
@@ -18,17 +19,23 @@ import { useParams } from 'react-router-dom';
 
 interface MBSagaProps {}
 
+enum navType {
+  ME = 'me',
+  GRAFFITI = 'graffiti',
+}
+
 enum searchType {
-  ALL = 'A',
-  INDEX = 'I',
-  TITLE = 'T',
-  CONTENTS = 'C',
+  ALL = 'ALL',
+  INDEX = 'INDEX',
+  TITLE = 'TITLE',
+  CONTENTS = 'CONTENTS',
+  TAG = 'TAG',
 }
 
 enum sortTargetType {
-  INDEX = 'I',
-  TITLE = 'T',
-  DATE = 'D',
+  INDEX = 'INDEX',
+  TITLE = 'TITLE',
+  DATE = 'DATE',
 }
 
 enum sortType {
@@ -40,12 +47,13 @@ function MBSaga(props: MBSagaProps) {
   /* ――――――――――――――― Variable ――――――――――――――― */
   /* ===== Props ===== */
   const {} = props;
-  const { id } = useParams();
+  const { nav, id } = useParams();
 
   /* ===== Const ===== */
-  const mbList = [...MB_NA];
 
   /* ===== State ===== */
+  const [navi, setNavi] = React.useState<navType>(navType.ME);
+  const [mbList, setMbList] = React.useState<IMBData[]>(navi === navType.ME ? [...MB_NA] : [...MB_GRAFFITI]);
   const [searchOption, setSearchOption] = React.useState<{
     type: searchType;
     text: string;
@@ -65,10 +73,13 @@ function MBSaga(props: MBSagaProps) {
   /* ====== API ====== */
 
   /* ―――――――――――――――― Method ―――――――――――――――― */
+  const handleNavClick = (v: navType) => {
+    setNavi(v);
+  };
   const handleSearchChange = (option: typeof searchOption) => {
     setSearchOption(option);
   };
-  const handleSortHader = (option: typeof sortOption) => {
+  const handleSortHeaderClick = (option: typeof sortOption) => {
     if (sortOption.type !== option.type) {
       setSortOption({ ...option, sort: sortType.ASC });
     } else {
@@ -115,9 +126,23 @@ function MBSaga(props: MBSagaProps) {
     }
   }, [mbPlayer, mbData.contents]);
 
+  React.useEffect(() => {
+    setMbList(navi === navType.ME ? [...MB_NA] : [...MB_GRAFFITI]);
+  }, [navi]);
+
   /* ―――――――――――――――― Return ―――――――――――――――― */
   return (
-    <div data-page="mbSaga">
+    <div data-page="mbSaga" className={classNames(mbData.tag.length > 0 ? 'use-tags' : '')}>
+      <nav>
+        <ul>
+          <li className={classNames(navi === navType.ME ? 'active' : '')}>
+            <span onClick={() => handleNavClick(navType.ME)}>나</span>
+          </li>
+          <li className={classNames(navi === navType.GRAFFITI ? 'active' : '')}>
+            <span onClick={() => handleNavClick(navType.GRAFFITI)}>낙서장</span>
+          </li>
+        </ul>
+      </nav>
       <header className={classNames(mbHidden ? 'hide-list' : '')}>
         <ReactAudioPlayer src={ANT_DEN} autoPlay={true} loop />
         <div className="search">
@@ -126,6 +151,7 @@ function MBSaga(props: MBSagaProps) {
             <option value={searchType.INDEX}>{`색인`}</option>
             <option value={searchType.TITLE}>{`제목`}</option>
             <option value={searchType.CONTENTS}>{`내용`}</option>
+            <option value={searchType.TAG}>{`태그`}</option>
           </select>
           <input value={searchOption.text} onChange={(v) => handleSearchChange({ ...searchOption, text: v.target.value })} />
           <div className="list-control" onClick={() => setMbHidden(!mbHidden)}></div>
@@ -134,19 +160,19 @@ function MBSaga(props: MBSagaProps) {
           <li className="select-header">
             <span
               className={classNames(getSortClass(sortTargetType.INDEX))}
-              onClick={() => handleSortHader({ ...sortOption, type: sortTargetType.INDEX })}
+              onClick={() => handleSortHeaderClick({ ...sortOption, type: sortTargetType.INDEX })}
             >
               색인
             </span>
             <span
               className={classNames(getSortClass(sortTargetType.TITLE))}
-              onClick={() => handleSortHader({ ...sortOption, type: sortTargetType.TITLE })}
+              onClick={() => handleSortHeaderClick({ ...sortOption, type: sortTargetType.TITLE })}
             >
               제목
             </span>
             <span
               className={classNames(getSortClass(sortTargetType.DATE))}
-              onClick={() => handleSortHader({ ...sortOption, type: sortTargetType.DATE })}
+              onClick={() => handleSortHeaderClick({ ...sortOption, type: sortTargetType.DATE })}
             >
               날짜
             </span>
@@ -157,13 +183,18 @@ function MBSaga(props: MBSagaProps) {
                 case searchType.ALL:
                   return searchOption.text === ''
                     ? true
-                    : i === Number(searchOption.text) || v.title.includes(searchOption.text) || v.contents.includes(searchOption.text);
+                    : i === Number(searchOption.text) ||
+                        v.title.includes(searchOption.text) ||
+                        v.contents.includes(searchOption.text) ||
+                        v.tag.includes(searchOption.text as Tag);
                 case searchType.INDEX:
                   return searchOption.text === '' ? true : i === Number(searchOption.text);
                 case searchType.TITLE:
                   return v.title.includes(searchOption.text);
                 case searchType.CONTENTS:
                   return v.contents.includes(searchOption.text);
+                case searchType.TAG:
+                  return searchOption.text === '' ? true : v.tag.includes(searchOption.text as Tag);
                 default:
                   return false;
               }
@@ -207,6 +238,17 @@ function MBSaga(props: MBSagaProps) {
         </ul>
       </header>
       <div className="title">{`[${mbIdx}] ${mbData.title}`}</div>
+      {mbData.tag.length > 0 ? (
+        <div className="tags">
+          {mbData.tag.map((v, i) => {
+            return (
+              <span key={i} className="tag">
+                {v}
+              </span>
+            );
+          })}
+        </div>
+      ) : null}
       <article>
         <div className={classNames('speak-player', !mbPlayer ? 'stop' : '')} onClick={() => setMbPlayer(!mbPlayer)}></div>
         <div className="main-box">
