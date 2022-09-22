@@ -18,14 +18,14 @@ import MB_ART_02 from '../../resource/image/mb-art-02.png';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-interface MBSagaProps { }
+interface MBSagaProps {}
 
-enum navType {
+enum BlogCategoryType {
   ME = 'me',
   GRAFFITI = 'graffiti',
 }
 
-enum searchType {
+enum SearchType {
   ALL = 'ALL',
   INDEX = 'INDEX',
   TITLE = 'TITLE',
@@ -33,14 +33,14 @@ enum searchType {
   TAG = 'TAG',
 }
 
-enum sortTargetType {
+enum SortTargetType {
   INDEX = 'INDEX',
   TITLE = 'TITLE',
   TAG = 'TAG',
   DATE = 'DATE',
 }
 
-enum sortType {
+enum SortType {
   ASC,
   DESC,
 }
@@ -48,23 +48,21 @@ enum sortType {
 function MBSaga(props: MBSagaProps) {
   /* ――――――――――――――― Variable ――――――――――――――― */
   /* ===== Props ===== */
-  const { } = props;
-  const { paramNav = 'me', paramId } = useParams();
+  const {} = props;
+  const { paramNav = BlogCategoryType.ME, paramId } = useParams();
 
   /* ===== Const ===== */
 
   /* ===== State ===== */
-  const [navi, setNavi] = React.useState<navType>(paramNav === 'me' ? navType.ME : navType.GRAFFITI);
-  const [mbList, setMbList] = React.useState<IMBData[]>(
-    !!paramNav ? (paramNav === 'me' ? [...MB_NA] : [...MB_GRAFFITI]) : navi === navType.ME ? [...MB_NA] : [...MB_GRAFFITI],
-  );
+  const [navi, setNavi] = React.useState<BlogCategoryType>(paramNav === BlogCategoryType.ME ? BlogCategoryType.ME : BlogCategoryType.GRAFFITI);
+  const [mbList, setMbList] = React.useState<IMBData[]>(paramNav === BlogCategoryType.ME ? [...MB_NA] : [...MB_GRAFFITI]);
   const [searchOption, setSearchOption] = React.useState<{
-    type: searchType;
+    type: SearchType;
     text: string;
-  }>({ type: searchType.ALL, text: '' });
-  const [sortOption, setSortOption] = React.useState<{ type: sortTargetType; sort: sortType }>({
-    type: sortTargetType.INDEX,
-    sort: sortType.ASC,
+  }>({ type: SearchType.ALL, text: '' });
+  const [sortOption, setSortOption] = React.useState<{ type: SortTargetType; sort: SortType }>({
+    type: SortTargetType.INDEX,
+    sort: SortType.ASC,
   });
   const [mbIdx, setMbIdx] = React.useState<number>(!!paramId ? Number(paramId) : Math.floor(Math.random() * mbList.length));
   const [mbData, setMbData] = React.useState<IMBData>(mbList[mbIdx]);
@@ -76,12 +74,12 @@ function MBSaga(props: MBSagaProps) {
   const ref = React.useRef<HTMLDivElement>(null);
 
   /* ====== API ====== */
-  const API_SERVER = 'http://localhost:666'
+  const API_SERVER = 'http://localhost:666';
   // const API_SERVER = 'http://bible.hmbgaq.com:666'
-  enum BlogCategoryType {
-    ME = 'ME',
-    GRAFFITI = 'GRAFFITI'
-  };
+  //enum BlogCategoryType {
+  //  ME = 'ME',
+  //  GRAFFITI = 'GRAFFITI'
+  //};
 
   // 방문자 수 조회 (GET - /blog/visit/:category/:storyId)
   async function getVisits(category: BlogCategoryType, storyId: string) {
@@ -93,7 +91,7 @@ function MBSaga(props: MBSagaProps) {
 
     // ────────── Test start ──────────
     if (res.data.result === 'ok') {
-      console.log("---> Test OK");
+      console.log('---> Test OK');
     }
     // ─────────── Test End ───────────
 
@@ -106,7 +104,7 @@ function MBSaga(props: MBSagaProps) {
 
     // ────────── Test start ──────────
     if (res.data.result === 'ok') {
-      console.log("---> Test OK");
+      console.log('---> Test OK');
     }
     // ─────────── Test End ───────────
 
@@ -119,7 +117,7 @@ function MBSaga(props: MBSagaProps) {
 
     // ────────── Test start ──────────
     if (res.data.result === 'ok') {
-      console.log("---> Test OK");
+      console.log('---> Test OK');
     }
     // ─────────── Test End ───────────
 
@@ -132,7 +130,7 @@ function MBSaga(props: MBSagaProps) {
 
     // ────────── Test start ──────────
     if (res.data.result === 'ok') {
-      console.log("---> Test OK");
+      console.log('---> Test OK');
     }
     // ─────────── Test End ───────────
 
@@ -152,7 +150,7 @@ function MBSaga(props: MBSagaProps) {
 
     // ────────── Test start ──────────
     if (res.data.result === 'ok') {
-      console.log("---> Test OK");
+      console.log('---> Test OK');
     }
     // ─────────── Test End ───────────
 
@@ -189,11 +187,10 @@ function MBSaga(props: MBSagaProps) {
       const evaluation = await getEvaluation(BlogCategoryType.ME, '1');
       console.log('[API] get evaluation (category: ME, storyId: 1) => ', evaluation);
     })();
-  }, [])
-
+  }, []);
 
   /* ―――――――――――――――― Method ―――――――――――――――― */
-  const handleNavClick = (v: navType) => {
+  const handleNavClick = (v: BlogCategoryType) => {
     setNavi(v);
   };
   const handleSearchChange = (option: typeof searchOption) => {
@@ -201,9 +198,9 @@ function MBSaga(props: MBSagaProps) {
   };
   const handleSortHeaderClick = (option: typeof sortOption) => {
     if (sortOption.type !== option.type) {
-      setSortOption({ ...option, sort: sortType.ASC });
+      setSortOption({ ...option, sort: SortType.ASC });
     } else {
-      setSortOption({ ...option, sort: sortOption.sort === sortType.ASC ? sortType.DESC : sortType.ASC });
+      setSortOption({ ...option, sort: sortOption.sort === SortType.ASC ? SortType.DESC : SortType.ASC });
     }
   };
   const handleListClick = (v: IMBData, i: number) => {
@@ -239,11 +236,11 @@ function MBSaga(props: MBSagaProps) {
     // SpeechSynthesisUtterance에 저장된 내용을 바탕으로 음성합성 실행
     window.speechSynthesis.speak(speechMsg);
   };
-  const getSortClass = (type: sortTargetType) => {
+  const getSortClass = (type: SortTargetType) => {
     let returnClass = '';
 
     if (type === sortOption.type) {
-      returnClass = `sort-${sortOption.sort === sortType.ASC ? 'asc' : 'desc'}`;
+      returnClass = `sort-${sortOption.sort === SortType.ASC ? 'asc' : 'desc'}`;
     }
 
     return returnClass;
@@ -269,7 +266,7 @@ function MBSaga(props: MBSagaProps) {
   }, [mbPlayer, mbSpeakContents, mbData.contents]);
 
   React.useEffect(() => {
-    setMbList(navi === navType.ME ? [...MB_NA] : [...MB_GRAFFITI]);
+    setMbList(navi === BlogCategoryType.ME ? [...MB_NA] : [...MB_GRAFFITI]);
   }, [navi]);
 
   /* ―――――――――――――――― Return ―――――――――――――――― */
@@ -277,23 +274,23 @@ function MBSaga(props: MBSagaProps) {
     <div data-page="mbSaga" className={classNames(mbData.tag.length > 0 ? 'use-tags' : '')}>
       <nav>
         <ul>
-          <li className={classNames(navi === navType.ME ? 'active' : '')}>
-            <span onClick={() => handleNavClick(navType.ME)}>나</span>
+          <li className={classNames(navi === BlogCategoryType.ME ? 'active' : '')}>
+            <span onClick={() => handleNavClick(BlogCategoryType.ME)}>나</span>
           </li>
-          <li className={classNames(navi === navType.GRAFFITI ? 'active' : '')}>
-            <span onClick={() => handleNavClick(navType.GRAFFITI)}>낙서장</span>
+          <li className={classNames(navi === BlogCategoryType.GRAFFITI ? 'active' : '')}>
+            <span onClick={() => handleNavClick(BlogCategoryType.GRAFFITI)}>낙서장</span>
           </li>
         </ul>
       </nav>
       <header className={classNames(mbHidden ? 'hide-list' : '')}>
         <ReactAudioPlayer src={ANT_DEN} autoPlay={true} loop />
         <div className="search">
-          <select value={searchOption.type} onChange={(v) => handleSearchChange({ ...searchOption, type: v.target.value as searchType })}>
-            <option value={searchType.ALL}>{`전체`}</option>
-            <option value={searchType.INDEX}>{`색인`}</option>
-            <option value={searchType.TITLE}>{`제목`}</option>
-            <option value={searchType.CONTENTS}>{`내용`}</option>
-            <option value={searchType.TAG}>{`태그`}</option>
+          <select value={searchOption.type} onChange={(v) => handleSearchChange({ ...searchOption, type: v.target.value as SearchType })}>
+            <option value={SearchType.ALL}>{`전체`}</option>
+            <option value={SearchType.INDEX}>{`색인`}</option>
+            <option value={SearchType.TITLE}>{`제목`}</option>
+            <option value={SearchType.CONTENTS}>{`내용`}</option>
+            <option value={SearchType.TAG}>{`태그`}</option>
           </select>
           <input value={searchOption.text} onChange={(v) => handleSearchChange({ ...searchOption, text: v.target.value })} />
           <div className="list-control" onClick={() => setMbHidden(!mbHidden)}></div>
@@ -301,26 +298,26 @@ function MBSaga(props: MBSagaProps) {
         <ul className="select-list">
           <li className="select-header">
             <span
-              className={classNames(getSortClass(sortTargetType.INDEX))}
-              onClick={() => handleSortHeaderClick({ ...sortOption, type: sortTargetType.INDEX })}
+              className={classNames(getSortClass(SortTargetType.INDEX))}
+              onClick={() => handleSortHeaderClick({ ...sortOption, type: SortTargetType.INDEX })}
             >
               색인
             </span>
             <span
-              className={classNames(getSortClass(sortTargetType.TITLE))}
-              onClick={() => handleSortHeaderClick({ ...sortOption, type: sortTargetType.TITLE })}
+              className={classNames(getSortClass(SortTargetType.TITLE))}
+              onClick={() => handleSortHeaderClick({ ...sortOption, type: SortTargetType.TITLE })}
             >
               제목
             </span>
             <span
-              className={classNames(getSortClass(sortTargetType.TAG))}
-              onClick={() => handleSortHeaderClick({ ...sortOption, type: sortTargetType.TAG })}
+              className={classNames(getSortClass(SortTargetType.TAG))}
+              onClick={() => handleSortHeaderClick({ ...sortOption, type: SortTargetType.TAG })}
             >
               태그
             </span>
             <span
-              className={classNames(getSortClass(sortTargetType.DATE))}
-              onClick={() => handleSortHeaderClick({ ...sortOption, type: sortTargetType.DATE })}
+              className={classNames(getSortClass(SortTargetType.DATE))}
+              onClick={() => handleSortHeaderClick({ ...sortOption, type: SortTargetType.DATE })}
             >
               날짜
             </span>
@@ -328,46 +325,46 @@ function MBSaga(props: MBSagaProps) {
           {mbList
             .filter((v, i) => {
               switch (searchOption.type) {
-                case searchType.ALL:
+                case SearchType.ALL:
                   return searchOption.text === ''
                     ? true
                     : i === Number(searchOption.text) ||
-                    v.title.includes(searchOption.text) ||
-                    v.contents.includes(searchOption.text) ||
-                    v.tag.filter((ele) => new RegExp(searchOption.text).test(ele)).length > 0;
-                case searchType.INDEX:
+                        v.title.includes(searchOption.text) ||
+                        v.contents.includes(searchOption.text) ||
+                        v.tag.filter((ele) => new RegExp(searchOption.text).test(ele)).length > 0;
+                case SearchType.INDEX:
                   return searchOption.text === '' ? true : i === Number(searchOption.text);
-                case searchType.TITLE:
+                case SearchType.TITLE:
                   return v.title.includes(searchOption.text);
-                case searchType.CONTENTS:
+                case SearchType.CONTENTS:
                   return v.contents.includes(searchOption.text);
-                case searchType.TAG:
+                case SearchType.TAG:
                   return searchOption.text === '' ? true : v.tag.filter((ele) => new RegExp(searchOption.text).test(ele)).length > 0;
                 default:
                   return false;
               }
             })
             .sort((a, b) => {
-              if (sortOption.type === sortTargetType.INDEX) {
-                return sortOption.sort === sortType.ASC ? 1 : -1;
-              } else if (sortOption.type === sortTargetType.TITLE) {
+              if (sortOption.type === SortTargetType.INDEX) {
+                return sortOption.sort === SortType.ASC ? 1 : -1;
+              } else if (sortOption.type === SortTargetType.TITLE) {
                 return a.title > b.title
-                  ? -1 * (sortOption.sort === sortType.ASC ? -1 : 1)
+                  ? -1 * (sortOption.sort === SortType.ASC ? -1 : 1)
                   : a.title === b.title
-                    ? 0
-                    : 1 * (sortOption.sort === sortType.ASC ? -1 : 1);
-              } else if (sortOption.type === sortTargetType.DATE) {
+                  ? 0
+                  : 1 * (sortOption.sort === SortType.ASC ? -1 : 1);
+              } else if (sortOption.type === SortTargetType.DATE) {
                 return a.date > b.date
-                  ? -1 * (sortOption.sort === sortType.ASC ? -1 : 1)
+                  ? -1 * (sortOption.sort === SortType.ASC ? -1 : 1)
                   : a.date === b.date
-                    ? 0
-                    : 1 * (sortOption.sort === sortType.ASC ? -1 : 1);
-              } else if (sortOption.type === sortTargetType.TAG) {
+                  ? 0
+                  : 1 * (sortOption.sort === SortType.ASC ? -1 : 1);
+              } else if (sortOption.type === SortTargetType.TAG) {
                 return a.tag.length > b.tag.length
-                  ? -1 * (sortOption.sort === sortType.ASC ? -1 : 1)
+                  ? -1 * (sortOption.sort === SortType.ASC ? -1 : 1)
                   : a.tag.length === b.tag.length
-                    ? 0
-                    : 1 * (sortOption.sort === sortType.ASC ? -1 : 1);
+                  ? 0
+                  : 1 * (sortOption.sort === SortType.ASC ? -1 : 1);
               } else {
                 return 1;
               }
@@ -429,6 +426,6 @@ function MBSaga(props: MBSagaProps) {
   );
 }
 
-namespace MBSaga { }
+namespace MBSaga {}
 
 export default MBSaga;
