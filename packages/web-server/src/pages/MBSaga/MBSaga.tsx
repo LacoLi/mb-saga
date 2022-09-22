@@ -9,7 +9,7 @@
 import React from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import ANT_DEN from '../../resource/sound/ant-den.mp3';
-import { MB_NA, IMBData, Tag } from '../../common/const/mb-me';
+import { MB_NA, IMBData, TagColor } from '../../common/const/mb-me';
 import { MB_NA as MB_GRAFFITI } from '../../common/const/mb-graffiti';
 import Util from '../../common/util';
 import classNames from 'classnames';
@@ -35,6 +35,7 @@ enum searchType {
 enum sortTargetType {
   INDEX = 'INDEX',
   TITLE = 'TITLE',
+  TAG = 'TAG',
   DATE = 'DATE',
 }
 
@@ -47,13 +48,15 @@ function MBSaga(props: MBSagaProps) {
   /* ――――――――――――――― Variable ――――――――――――――― */
   /* ===== Props ===== */
   const {} = props;
-  const { nav, id } = useParams();
+  const { paramNav = 'me', paramId } = useParams();
 
   /* ===== Const ===== */
 
   /* ===== State ===== */
-  const [navi, setNavi] = React.useState<navType>(navType.ME);
-  const [mbList, setMbList] = React.useState<IMBData[]>(navi === navType.ME ? [...MB_NA] : [...MB_GRAFFITI]);
+  const [navi, setNavi] = React.useState<navType>(paramNav === 'me' ? navType.ME : navType.GRAFFITI);
+  const [mbList, setMbList] = React.useState<IMBData[]>(
+    !!paramNav ? (paramNav === 'me' ? [...MB_NA] : [...MB_GRAFFITI]) : navi === navType.ME ? [...MB_NA] : [...MB_GRAFFITI],
+  );
   const [searchOption, setSearchOption] = React.useState<{
     type: searchType;
     text: string;
@@ -62,10 +65,11 @@ function MBSaga(props: MBSagaProps) {
     type: sortTargetType.INDEX,
     sort: sortType.ASC,
   });
-  const [mbIdx, setMbIdx] = React.useState<number>(!!id ? Number(id) : Math.floor(Math.random() * mbList.length));
+  const [mbIdx, setMbIdx] = React.useState<number>(!!paramId ? Number(paramId) : Math.floor(Math.random() * mbList.length));
   const [mbData, setMbData] = React.useState<IMBData>(mbList[mbIdx]);
   const [mbHidden, setMbHidden] = React.useState<boolean>(false);
   const [mbPlayer, setMbPlayer] = React.useState<boolean>(false);
+  const [mbSpeakContents, setMbSpeakContents] = React.useState<string | undefined>(undefined);
 
   /* ===== Ref ===== */
   const ref = React.useRef<HTMLDivElement>(null);
@@ -89,7 +93,13 @@ function MBSaga(props: MBSagaProps) {
   const handleListClick = (v: IMBData, i: number) => {
     setMbIdx(i);
     setMbData(v);
+    setMbSpeakContents(undefined);
     if (!!ref.current) ref.current.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  const handleContentsMouseUp = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    //const speakContents = !!document.getSelection() ? document.getSelection()?.toString() : undefined;
+    //if (!!mbPlayer && !speakContents) return;
+    //setMbSpeakContents(speakContents);
   };
   const speakGodMBText = () => {
     //if (typeof SpeechSynthesisUtterance === 'undefined' || typeof window.speechSynthesis === 'undefined') {
@@ -102,7 +112,13 @@ function MBSaga(props: MBSagaProps) {
     speechMsg.rate = 1; // 속도: 0.1 ~ 10
     speechMsg.pitch = 1; // 음높이: 0 ~ 2
     speechMsg.lang = 'ko-KR';
-    speechMsg.text = mbData.contents;
+    speechMsg.text = !!mbSpeakContents ? mbSpeakContents : mbData.contents;
+
+    speechMsg.onend = () => {
+      //if (!!mbPlayer) setMbSpeakContents(undefined);
+
+      setMbPlayer(false);
+    };
 
     // SpeechSynthesisUtterance에 저장된 내용을 바탕으로 음성합성 실행
     window.speechSynthesis.speak(speechMsg);
@@ -116,6 +132,16 @@ function MBSaga(props: MBSagaProps) {
 
     return returnClass;
   };
+  const copyURL = () => {
+    const tempElement = document.createElement('textarea');
+    document.body.appendChild(tempElement);
+    tempElement.readOnly = true;
+    tempElement.value = `http://bible.hmbgaq.com/mb-saga/${navi}/${mbIdx}`;
+    tempElement.select();
+    document.execCommand('copy');
+
+    document.removeChild(tempElement);
+  };
 
   /* ―――――――――――――― Use Effect ―――――――――――――― */
   React.useEffect(() => {
@@ -124,7 +150,7 @@ function MBSaga(props: MBSagaProps) {
     } else {
       window.speechSynthesis.cancel();
     }
-  }, [mbPlayer, mbData.contents]);
+  }, [mbPlayer, mbSpeakContents, mbData.contents]);
 
   React.useEffect(() => {
     setMbList(navi === navType.ME ? [...MB_NA] : [...MB_GRAFFITI]);
@@ -171,6 +197,12 @@ function MBSaga(props: MBSagaProps) {
               제목
             </span>
             <span
+              className={classNames(getSortClass(sortTargetType.TAG))}
+              onClick={() => handleSortHeaderClick({ ...sortOption, type: sortTargetType.TAG })}
+            >
+              태그
+            </span>
+            <span
               className={classNames(getSortClass(sortTargetType.DATE))}
               onClick={() => handleSortHeaderClick({ ...sortOption, type: sortTargetType.DATE })}
             >
@@ -186,7 +218,7 @@ function MBSaga(props: MBSagaProps) {
                     : i === Number(searchOption.text) ||
                         v.title.includes(searchOption.text) ||
                         v.contents.includes(searchOption.text) ||
-                        v.tag.includes(searchOption.text as Tag);
+                        v.tag.filter((ele) => new RegExp(searchOption.text).test(ele)).length > 0;
                 case searchType.INDEX:
                   return searchOption.text === '' ? true : i === Number(searchOption.text);
                 case searchType.TITLE:
@@ -194,7 +226,7 @@ function MBSaga(props: MBSagaProps) {
                 case searchType.CONTENTS:
                   return v.contents.includes(searchOption.text);
                 case searchType.TAG:
-                  return searchOption.text === '' ? true : v.tag.includes(searchOption.text as Tag);
+                  return searchOption.text === '' ? true : v.tag.filter((ele) => new RegExp(searchOption.text).test(ele)).length > 0;
                 default:
                   return false;
               }
@@ -214,6 +246,12 @@ function MBSaga(props: MBSagaProps) {
                   : a.date === b.date
                   ? 0
                   : 1 * (sortOption.sort === sortType.ASC ? -1 : 1);
+              } else if (sortOption.type === sortTargetType.TAG) {
+                return a.tag.length > b.tag.length
+                  ? -1 * (sortOption.sort === sortType.ASC ? -1 : 1)
+                  : a.tag.length === b.tag.length
+                  ? 0
+                  : 1 * (sortOption.sort === sortType.ASC ? -1 : 1);
               } else {
                 return 1;
               }
@@ -231,6 +269,7 @@ function MBSaga(props: MBSagaProps) {
                 >
                   <span>{`${mbList.findIndex((vv, ii) => vv.title === v.title)}`}</span>
                   <span>{`${v.title}`}</span>
+                  <span>{`${v.tag}`}</span>
                   <span>{`${Util.format.date(v.date, 'Y-M-D')}`}</span>
                 </li>
               );
@@ -242,7 +281,13 @@ function MBSaga(props: MBSagaProps) {
         <div className="tags">
           {mbData.tag.map((v, i) => {
             return (
-              <span key={i} className="tag">
+              <span
+                key={i}
+                className={classNames('tag', TagColor[v].dangerous ? 'dangerous' : '')}
+                style={{
+                  backgroundColor: TagColor[v].color,
+                }}
+              >
                 {v}
               </span>
             );
@@ -251,14 +296,19 @@ function MBSaga(props: MBSagaProps) {
       ) : null}
       <article>
         <div className={classNames('speak-player', !mbPlayer ? 'stop' : '')} onClick={() => setMbPlayer(!mbPlayer)}></div>
+        <div className={'copy-url'} onClick={() => copyURL()}></div>
         <div className="main-box">
           <img src={MB_ART_02} alt="GOD MB" />
           <div className="main-box-wrap" ref={ref}>
             <div className="date">{`${Util.format.date(mbData.date, 'Y-M-D')}`}</div>
-            <div className="contents">{`${mbData.contents}`}</div>
+            <div className="contents" onMouseUp={handleContentsMouseUp}>
+              {!!mbData.highlight ? <span className="highlight">{mbData.highlight}</span> : null}
+              {`${mbData.contents}`}
+            </div>
           </div>
         </div>
       </article>
+      <textarea id="copyTextarea"></textarea>
     </div>
   );
 }
