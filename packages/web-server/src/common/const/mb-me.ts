@@ -1,16 +1,16 @@
 export const enum Tag {
-  CRIME = 'CRIME',
-  HENTAI = 'HENTAI',
-  KIMO = 'KIMO',
-  FORBIDDEN_LOVE = 'FORBIDDEN_LOVE',
-  OGRI_TOGRI = 'OGRI_TOGRI',
-  ENGLISH = 'ENGLISH',
-  CHRISTMAS = 'CHRISTMAS',
-  VIOLENCE = 'VIOLENCE',
-  DELUSION = 'DELUSION',
-  GAY = 'GAY',
+  CRIME = '범죄',
+  HENTAI = '변태',
+  KIMO = '키모',
+  FORBIDDEN_LOVE = '금지된 사랑',
+  OGRI_TOGRI = '오그리 토그리',
+  ENGLISH = '잉글리쉬',
+  CHRISTMAS = '크리스마스',
+  VIOLENCE = '폭력적인',
+  DELUSION = '망상',
+  GAY = '게이',
   MICHINNOM = '미친놈',
-  MUCHIN_MUCHIN_MUCHIN_MUCHIN = '무7 무7 무7 무7',
+  MUCHIN_MUCHIN_MUCHIN_MUCHIN = '무7련',
 }
 
 export interface IMBData {
