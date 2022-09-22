@@ -11,6 +11,7 @@ export const enum Tag {
   GAY = '게이',
   MICHINNOM = '미친놈',
   MUCHIN_MUCHIN_MUCHIN_MUCHIN = '무7련',
+  JIRAL = '지랄',
 }
 
 export interface IMBData {
