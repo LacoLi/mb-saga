@@ -25,6 +25,17 @@ enum searchType {
   CONTENTS = 'C',
 }
 
+enum sortTargetType {
+  INDEX = 'I',
+  TITLE = 'T',
+  DATE = 'D',
+}
+
+enum sortType {
+  ASC,
+  DESC,
+}
+
 function MBSaga(props: MBSagaProps) {
   /* ――――――――――――――― Variable ――――――――――――――― */
   /* ===== Props ===== */
@@ -39,6 +50,10 @@ function MBSaga(props: MBSagaProps) {
     type: searchType;
     text: string;
   }>({ type: searchType.ALL, text: '' });
+  const [sortOption, setSortOption] = React.useState<{ type: sortTargetType; sort: sortType }>({
+    type: sortTargetType.INDEX,
+    sort: sortType.ASC,
+  });
   const [mbIdx, setMbIdx] = React.useState<number>(!!id ? Number(id) : Math.floor(Math.random() * mbList.length));
   const [mbData, setMbData] = React.useState<IMBData>(mbList[mbIdx]);
   const [mbHidden, setMbHidden] = React.useState<boolean>(false);
@@ -52,6 +67,13 @@ function MBSaga(props: MBSagaProps) {
   /* ―――――――――――――――― Method ―――――――――――――――― */
   const handleSearchChange = (option: typeof searchOption) => {
     setSearchOption(option);
+  };
+  const handleSortHader = (option: typeof sortOption) => {
+    if (sortOption.type !== option.type) {
+      setSortOption({ ...option, sort: sortType.ASC });
+    } else {
+      setSortOption({ ...option, sort: sortOption.sort === sortType.ASC ? sortType.DESC : sortType.ASC });
+    }
   };
   const handleListClick = (v: IMBData, i: number) => {
     setMbIdx(i);
@@ -73,6 +95,15 @@ function MBSaga(props: MBSagaProps) {
 
     // SpeechSynthesisUtterance에 저장된 내용을 바탕으로 음성합성 실행
     window.speechSynthesis.speak(speechMsg);
+  };
+  const getSortClass = (type: sortTargetType) => {
+    let returnClass = '';
+
+    if (type === sortOption.type) {
+      returnClass = `sort-${sortOption.sort === sortType.ASC ? 'asc' : 'desc'}`;
+    }
+
+    return returnClass;
   };
 
   /* ―――――――――――――― Use Effect ―――――――――――――― */
@@ -100,6 +131,26 @@ function MBSaga(props: MBSagaProps) {
           <div className="list-control" onClick={() => setMbHidden(!mbHidden)}></div>
         </div>
         <ul className="select-list">
+          <li className="select-header">
+            <span
+              className={classNames(getSortClass(sortTargetType.INDEX))}
+              onClick={() => handleSortHader({ ...sortOption, type: sortTargetType.INDEX })}
+            >
+              색인
+            </span>
+            <span
+              className={classNames(getSortClass(sortTargetType.TITLE))}
+              onClick={() => handleSortHader({ ...sortOption, type: sortTargetType.TITLE })}
+            >
+              제목
+            </span>
+            <span
+              className={classNames(getSortClass(sortTargetType.DATE))}
+              onClick={() => handleSortHader({ ...sortOption, type: sortTargetType.DATE })}
+            >
+              날짜
+            </span>
+          </li>
           {mbList
             .filter((v, i) => {
               switch (searchOption.type) {
@@ -115,6 +166,25 @@ function MBSaga(props: MBSagaProps) {
                   return v.contents.includes(searchOption.text);
                 default:
                   return false;
+              }
+            })
+            .sort((a, b) => {
+              if (sortOption.type === sortTargetType.INDEX) {
+                return sortOption.sort === sortType.ASC ? 1 : -1;
+              } else if (sortOption.type === sortTargetType.TITLE) {
+                return a.title > b.title
+                  ? -1 * (sortOption.sort === sortType.ASC ? -1 : 1)
+                  : a.title === b.title
+                  ? 0
+                  : 1 * (sortOption.sort === sortType.ASC ? -1 : 1);
+              } else if (sortOption.type === sortTargetType.DATE) {
+                return a.date > b.date
+                  ? -1 * (sortOption.sort === sortType.ASC ? -1 : 1)
+                  : a.date === b.date
+                  ? 0
+                  : 1 * (sortOption.sort === sortType.ASC ? -1 : 1);
+              } else {
+                return 1;
               }
             })
             .map((v, i) => {
