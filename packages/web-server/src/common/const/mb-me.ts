@@ -1,9 +1,21 @@
-export const enum Tag {}
+export const enum Tag {
+  CRIME,
+  HENTAI,
+  KIMO,
+  FORBIDDEN_LOVE,
+  OGRI_TOGRI,
+  ENGLISH,
+  CHRISTMAS,
+  VIOLENCE,
+  DELUSION,
+  GAY,
+}
 
 export interface IMBData {
   title: string;
   tag: Tag[];
   date: Date;
+  summary?: string;
   contents: string;
 }
 
