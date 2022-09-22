@@ -6,7 +6,7 @@
  * TYPE : Page
  * 개정이력 :
 --------------------------------------------------------------------------------------------------------------------------------------------*/
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import ANT_DEN from '../../resource/sound/ant-den.mp3';
 import { MB_NA, IMBData, TagColor } from '../../common/const/mb-me';
@@ -16,8 +16,9 @@ import classNames from 'classnames';
 import MB_PROFILE from '../../resource/image/gmb-profile.png';
 import MB_ART_02 from '../../resource/image/mb-art-02.png';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
-interface MBSagaProps {}
+interface MBSagaProps { }
 
 enum navType {
   ME = 'me',
@@ -47,7 +48,7 @@ enum sortType {
 function MBSaga(props: MBSagaProps) {
   /* ――――――――――――――― Variable ――――――――――――――― */
   /* ===== Props ===== */
-  const {} = props;
+  const { } = props;
   const { paramNav = 'me', paramId } = useParams();
 
   /* ===== Const ===== */
@@ -75,6 +76,121 @@ function MBSaga(props: MBSagaProps) {
   const ref = React.useRef<HTMLDivElement>(null);
 
   /* ====== API ====== */
+  const API_SERVER = 'http://localhost:666'
+  // const API_SERVER = 'http://bible.hmbgaq.com:666'
+  enum BlogCategoryType {
+    ME = 'ME',
+    GRAFFITI = 'GRAFFITI'
+  };
+
+  // 방문자 수 조회 (GET - /blog/visit/:category/:storyId)
+  async function getVisits(category: BlogCategoryType, storyId: string) {
+    let visits = 0;
+    const res = await axios.get(`${API_SERVER}/blog/visit/${category}/${storyId}`);
+    if (res.data.result === 'ok') {
+      visits = res.data.data.visits;
+    }
+
+    // ────────── Test start ──────────
+    if (res.data.result === 'ok') {
+      console.log("---> Test OK");
+    }
+    // ─────────── Test End ───────────
+
+    return visits;
+  }
+
+  // 방문자 수 증가 (PUT - /blog/visit/:category/:storyId)
+  async function addVisits(category: BlogCategoryType, storyId: string) {
+    const res = await axios.put(`${API_SERVER}/blog/visit/${category}/${storyId}`);
+
+    // ────────── Test start ──────────
+    if (res.data.result === 'ok') {
+      console.log("---> Test OK");
+    }
+    // ─────────── Test End ───────────
+
+    return res.data.result === 'ok';
+  }
+
+  // 싫어요 (PUT - /blog/evaluation/dislike/:category/:storyId)
+  async function addDislike(category: BlogCategoryType, storyId: string) {
+    const res = await axios.put(`${API_SERVER}/blog/evaluation/dislike/${category}/${storyId}`);
+
+    // ────────── Test start ──────────
+    if (res.data.result === 'ok') {
+      console.log("---> Test OK");
+    }
+    // ─────────── Test End ───────────
+
+    return res.data.result === 'ok';
+  }
+
+  // Jonna 싫어요 (PUT - /blog/evaluation/detest/:category/:storyId)
+  async function addDetest(category: BlogCategoryType, storyId: string) {
+    const res = await axios.put(`${API_SERVER}/blog/evaluation/detest/${category}/${storyId}`);
+
+    // ────────── Test start ──────────
+    if (res.data.result === 'ok') {
+      console.log("---> Test OK");
+    }
+    // ─────────── Test End ───────────
+
+    return res.data.result === 'ok';
+  }
+
+  // 싫어요, Jonna 싫어요 개수 조회 (GET - /blog/evaluation/:category/:storyId)
+  async function getEvaluation(category: BlogCategoryType, storyId: string) {
+    let evaluation = {
+      dislike: 0,
+      detest: 0,
+    };
+    const res = await axios.get(`${API_SERVER}/blog/evaluation/${category}/${storyId}`);
+    if (res.data.result === 'ok') {
+      evaluation = res.data.data;
+    }
+
+    // ────────── Test start ──────────
+    if (res.data.result === 'ok') {
+      console.log("---> Test OK");
+    }
+    // ─────────── Test End ───────────
+
+    return evaluation;
+  }
+
+  React.useEffect(() => {
+    // 방문자 수 조회
+    (async () => {
+      const visits = await getVisits(BlogCategoryType.ME, '1');
+      console.log('[API] get visits (category: ME, storyId: 1) => ', visits);
+    })();
+
+    // 방문자 수 증가
+    (async () => {
+      const addVisitsResult = await addVisits(BlogCategoryType.ME, '1');
+      console.log('[API] add visits (category: ME, storyId: 1) => ', addVisitsResult);
+    })();
+
+    // 싫어요
+    (async () => {
+      const dislikeResult = await addDislike(BlogCategoryType.ME, '1');
+      console.log('[API] add dislike (category: ME, storyId: 1) => ', dislikeResult);
+    })();
+
+    // Jonna 싫어요
+    (async () => {
+      const detestResult = await addDetest(BlogCategoryType.ME, '1');
+      console.log('[API] add dislike (category: ME, storyId: 1) => ', detestResult);
+    })();
+
+    // 싫어요, Jonna 싫어요 개수 조회
+    (async () => {
+      const evaluation = await getEvaluation(BlogCategoryType.ME, '1');
+      console.log('[API] get evaluation (category: ME, storyId: 1) => ', evaluation);
+    })();
+  }, [])
+
 
   /* ―――――――――――――――― Method ―――――――――――――――― */
   const handleNavClick = (v: navType) => {
@@ -216,9 +332,9 @@ function MBSaga(props: MBSagaProps) {
                   return searchOption.text === ''
                     ? true
                     : i === Number(searchOption.text) ||
-                        v.title.includes(searchOption.text) ||
-                        v.contents.includes(searchOption.text) ||
-                        v.tag.filter((ele) => new RegExp(searchOption.text).test(ele)).length > 0;
+                    v.title.includes(searchOption.text) ||
+                    v.contents.includes(searchOption.text) ||
+                    v.tag.filter((ele) => new RegExp(searchOption.text).test(ele)).length > 0;
                 case searchType.INDEX:
                   return searchOption.text === '' ? true : i === Number(searchOption.text);
                 case searchType.TITLE:
@@ -238,20 +354,20 @@ function MBSaga(props: MBSagaProps) {
                 return a.title > b.title
                   ? -1 * (sortOption.sort === sortType.ASC ? -1 : 1)
                   : a.title === b.title
-                  ? 0
-                  : 1 * (sortOption.sort === sortType.ASC ? -1 : 1);
+                    ? 0
+                    : 1 * (sortOption.sort === sortType.ASC ? -1 : 1);
               } else if (sortOption.type === sortTargetType.DATE) {
                 return a.date > b.date
                   ? -1 * (sortOption.sort === sortType.ASC ? -1 : 1)
                   : a.date === b.date
-                  ? 0
-                  : 1 * (sortOption.sort === sortType.ASC ? -1 : 1);
+                    ? 0
+                    : 1 * (sortOption.sort === sortType.ASC ? -1 : 1);
               } else if (sortOption.type === sortTargetType.TAG) {
                 return a.tag.length > b.tag.length
                   ? -1 * (sortOption.sort === sortType.ASC ? -1 : 1)
                   : a.tag.length === b.tag.length
-                  ? 0
-                  : 1 * (sortOption.sort === sortType.ASC ? -1 : 1);
+                    ? 0
+                    : 1 * (sortOption.sort === sortType.ASC ? -1 : 1);
               } else {
                 return 1;
               }
@@ -313,6 +429,6 @@ function MBSaga(props: MBSagaProps) {
   );
 }
 
-namespace MBSaga {}
+namespace MBSaga { }
 
 export default MBSaga;
