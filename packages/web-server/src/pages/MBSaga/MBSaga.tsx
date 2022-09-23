@@ -86,8 +86,11 @@ function MBSaga(props: MBSagaProps) {
   const contentsRef = React.useRef<HTMLDivElement>(null);
 
   /* ====== API ====== */
-  const API_SERVER = `http://${domain}:666`;
-  // const API_SERVER = 'http://bible.hmbgaq.com:666'
+  //const API_SERVER = `http://${domain}:666`;
+  //const API_SERVER = 'http://bible.hmbgaq.com:666';
+  const split = window.location.origin.split(':');
+  const ip = `${split[0]}:${split[1]}`;
+  const API_SERVER = `${ip}:666`;
 
   // 방문자 수 조회 (GET - /blog/visit/:category/:storyId)
   async function getVisits(category: BlogCategoryType, storyId: string) {
