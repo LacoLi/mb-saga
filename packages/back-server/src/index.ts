@@ -34,13 +34,18 @@ enum BlogCategoryType {
   GRAFFITI = "graffiti",
 }
 
+enum EvaluationType {
+  DISLIKE = "dislike",
+  DETEST = "detest",
+}
+
 /** ===========================================================
  * Funciton
  * ============================================================ */
 async function getBlogEvaluationCount(
   category: BlogCategoryType,
   storyId: string,
-  type: "DISLIKE" | "DETEST"
+  type: EvaluationType
 ) {
   let count = 0;
 
@@ -61,7 +66,7 @@ async function getBlogEvaluationCount(
 async function addBlogEvaluationCount(
   category: BlogCategoryType,
   storyId: string,
-  type: "DISLIKE" | "DETEST"
+  type: EvaluationType
 ) {
   await pg.query(`
     INSERT INTO mb_blog_evaluation
@@ -161,13 +166,13 @@ app.put(
 
     try {
       // Dislike 개수 추가
-      addBlogEvaluationCount(category, storyId, "DISLIKE");
+      addBlogEvaluationCount(category, storyId, EvaluationType.DISLIKE);
 
       // Dislike 개수 가져오기
       dislike = await getBlogEvaluationCount(
         category as BlogCategoryType,
         storyId,
-        "DISLIKE"
+        EvaluationType.DISLIKE
       );
 
       // 조회 결과 넘겨주기
@@ -201,10 +206,14 @@ app.put(
 
     try {
       // Detest 개수 추가
-      addBlogEvaluationCount(category, storyId, "DETEST");
+      addBlogEvaluationCount(category, storyId, EvaluationType.DETEST);
 
       // Detest 개수 가져오기
-      detest = await getBlogEvaluationCount(category, storyId, "DETEST");
+      detest = await getBlogEvaluationCount(
+        category,
+        storyId,
+        EvaluationType.DETEST
+      );
 
       // 조회 결과 넘겨주기
       response.send({
@@ -241,13 +250,13 @@ app.get(
       dislike = await getBlogEvaluationCount(
         category as BlogCategoryType,
         storyId,
-        "DISLIKE"
+        EvaluationType.DISLIKE
       );
       // Detest 개수 가져오기
       detest = await getBlogEvaluationCount(
         category as BlogCategoryType,
         storyId,
-        "DETEST"
+        EvaluationType.DETEST
       );
 
       // 조회 결과 넘겨주기
