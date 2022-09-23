@@ -416,6 +416,55 @@
     margin: 5px;
   }
 
+  section {
+    display: grid;
+    grid-gap: 15px;
+    z-index: 10;
+
+    &.info-section {
+      position: absolute;
+      grid-template-columns: auto;
+      top: 20px;
+      left: 20px;
+    }
+
+    &.use-section {
+      position: absolute;
+      grid-template-columns: auto;
+      top: 20px;
+      right: 30px;
+
+      & > div {
+        display: grid;
+        grid-template-columns: auto;
+        justify-items: center;
+        grid-gap: 6px;
+        cursor: pointer;
+
+        & > i {
+          font-size: 40px;
+          color: #373737;
+        }
+
+        & > em {
+          font-size: 12px;
+        }
+
+        &.hate,
+        &.jonna-hate {
+          & > i {
+            color: #ff0000;
+            text-shadow: -1px 0px #fff, 0px 1px #fff, 1px 0px #fff, 0px -1px #fff;
+          }
+        }
+      }
+    }
+
+    & em {
+      font-weight: 700;
+    }
+  }
+
   .tags {
     height: 23px;
     text-align: center;
@@ -676,6 +725,19 @@
 //기본으로 작성되는 CSS는 576px보다 작은 화면에서 작동 됩니다.
 // 큰화면 데스크탑 (가로 해상도가 1200px 보다 작은 화면에 적용)
 @media (max-width: 1200px) {
+  [data-page='mbSaga'] {
+    section {
+      grid-gap: 10px;
+
+      &.use-section {
+        & > div {
+          & > i {
+            font-size: 30px;
+          }
+        }
+      }
+    }
+  }
 }
 
 // 테스크탑 (가로 해상도가 992px 보다 작은 화면에 적용)
@@ -687,6 +749,48 @@
           grid-template-columns: 42px 1fr 270px 80px;
         }
       }
+    }
+
+    section {
+      grid-gap: 10px;
+
+      &.info-section {
+        position: static;
+        color: #fff;
+        height: 34px;
+        grid-template-columns: repeat(4, auto) 1fr;
+        padding-bottom: 20px;
+        box-sizing: border-box;
+
+        & > span {
+          font-size: 12px;
+
+          & em {
+            font-size: inherit;
+          }
+        }
+      }
+
+      &.use-section {
+        grid-template-columns: repeat(3, auto);
+        top: 10px;
+        right: 2px;
+
+        & > div {
+          & > i {
+            font-size: 14px;
+            color: #fff;
+          }
+
+          & > em {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .main-box {
+      height: calc(100% - 34px);
     }
   }
 }

@@ -17,6 +17,7 @@ import MB_PROFILE from '../../resource/image/gmb-profile.png';
 import MB_ART_02 from '../../resource/image/mb-art-02.png';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { Icon } from 'lib/AmzPack';
 
 interface MBSagaProps {}
 
@@ -52,6 +53,7 @@ function MBSaga(props: MBSagaProps) {
   const { paramNav = BlogCategoryType.ME, paramId } = useParams();
 
   /* ===== Const ===== */
+  const domain = window.location.href.replace('http://', '').split('/')[0];
 
   /* ===== State ===== */
   const [navi, setNavi] = React.useState<BlogCategoryType>(paramNav === BlogCategoryType.ME ? BlogCategoryType.ME : BlogCategoryType.GRAFFITI);
@@ -69,17 +71,16 @@ function MBSaga(props: MBSagaProps) {
   const [mbHidden, setMbHidden] = React.useState<boolean>(false);
   const [mbPlayer, setMbPlayer] = React.useState<boolean>(false);
   const [mbSpeakContents, setMbSpeakContents] = React.useState<string | undefined>(undefined);
+  const [infoVisits, setInfoVisits] = React.useState<number>(0);
+  const [infoHates, setInfoHates] = React.useState<number>(0);
+  const [infoJonnaHates, setInfoJonnaHates] = React.useState<number>(0);
 
   /* ===== Ref ===== */
   const ref = React.useRef<HTMLDivElement>(null);
 
   /* ====== API ====== */
-  const API_SERVER = 'http://localhost:666';
+  const API_SERVER = `http://${domain}:666`;
   // const API_SERVER = 'http://bible.hmbgaq.com:666'
-  //enum BlogCategoryType {
-  //  ME = 'ME',
-  //  GRAFFITI = 'GRAFFITI'
-  //};
 
   // 방문자 수 조회 (GET - /blog/visit/:category/:storyId)
   async function getVisits(category: BlogCategoryType, storyId: string) {
@@ -87,13 +88,8 @@ function MBSaga(props: MBSagaProps) {
     const res = await axios.get(`${API_SERVER}/blog/visit/${category}/${storyId}`);
     if (res.data.result === 'ok') {
       visits = res.data.data.visits;
+      setInfoVisits(visits ?? 0);
     }
-
-    // ────────── Test start ──────────
-    if (res.data.result === 'ok') {
-      console.log('---> Test OK');
-    }
-    // ─────────── Test End ───────────
 
     return visits;
   }
@@ -102,37 +98,33 @@ function MBSaga(props: MBSagaProps) {
   async function addVisits(category: BlogCategoryType, storyId: string) {
     const res = await axios.put(`${API_SERVER}/blog/visit/${category}/${storyId}`);
 
-    // ────────── Test start ──────────
     if (res.data.result === 'ok') {
-      console.log('---> Test OK');
+      await getVisits(category, storyId);
     }
-    // ─────────── Test End ───────────
 
     return res.data.result === 'ok';
   }
 
   // 싫어요 (PUT - /blog/evaluation/dislike/:category/:storyId)
   async function addDislike(category: BlogCategoryType, storyId: string) {
+    alert('싫어요!');
     const res = await axios.put(`${API_SERVER}/blog/evaluation/dislike/${category}/${storyId}`);
 
-    // ────────── Test start ──────────
     if (res.data.result === 'ok') {
-      console.log('---> Test OK');
+      await getEvaluation(category, storyId);
     }
-    // ─────────── Test End ───────────
 
     return res.data.result === 'ok';
   }
 
   // Jonna 싫어요 (PUT - /blog/evaluation/detest/:category/:storyId)
   async function addDetest(category: BlogCategoryType, storyId: string) {
+    alert('존나 싫어요!');
     const res = await axios.put(`${API_SERVER}/blog/evaluation/detest/${category}/${storyId}`);
 
-    // ────────── Test start ──────────
     if (res.data.result === 'ok') {
-      console.log('---> Test OK');
+      await getEvaluation(category, storyId);
     }
-    // ─────────── Test End ───────────
 
     return res.data.result === 'ok';
   }
@@ -144,50 +136,16 @@ function MBSaga(props: MBSagaProps) {
       detest: 0,
     };
     const res = await axios.get(`${API_SERVER}/blog/evaluation/${category}/${storyId}`);
-    if (res.data.result === 'ok') {
-      evaluation = res.data.data;
-    }
 
-    // ────────── Test start ──────────
     if (res.data.result === 'ok') {
-      console.log('---> Test OK');
+      evaluation = res.data;
+
+      setInfoHates(Number(res.data.data.dislike ?? 0));
+      setInfoJonnaHates(Number(res.data.data.detest ?? 0));
     }
-    // ─────────── Test End ───────────
 
     return evaluation;
   }
-
-  React.useEffect(() => {
-    // 방문자 수 조회
-    (async () => {
-      const visits = await getVisits(BlogCategoryType.ME, '1');
-      console.log('[API] get visits (category: ME, storyId: 1) => ', visits);
-    })();
-
-    // 방문자 수 증가
-    (async () => {
-      const addVisitsResult = await addVisits(BlogCategoryType.ME, '1');
-      console.log('[API] add visits (category: ME, storyId: 1) => ', addVisitsResult);
-    })();
-
-    // 싫어요
-    (async () => {
-      const dislikeResult = await addDislike(BlogCategoryType.ME, '1');
-      console.log('[API] add dislike (category: ME, storyId: 1) => ', dislikeResult);
-    })();
-
-    // Jonna 싫어요
-    (async () => {
-      const detestResult = await addDetest(BlogCategoryType.ME, '1');
-      console.log('[API] add dislike (category: ME, storyId: 1) => ', detestResult);
-    })();
-
-    // 싫어요, Jonna 싫어요 개수 조회
-    (async () => {
-      const evaluation = await getEvaluation(BlogCategoryType.ME, '1');
-      console.log('[API] get evaluation (category: ME, storyId: 1) => ', evaluation);
-    })();
-  }, []);
 
   /* ―――――――――――――――― Method ―――――――――――――――― */
   const handleNavClick = (v: BlogCategoryType) => {
@@ -253,7 +211,9 @@ function MBSaga(props: MBSagaProps) {
     tempElement.select();
     document.execCommand('copy');
 
-    document.removeChild(tempElement);
+    alert('클립보드에 링크가 복사되었습니다.');
+
+    document.body.removeChild(tempElement);
   };
 
   /* ―――――――――――――― Use Effect ―――――――――――――― */
@@ -268,6 +228,18 @@ function MBSaga(props: MBSagaProps) {
   React.useEffect(() => {
     setMbList(navi === BlogCategoryType.ME ? [...MB_NA] : [...MB_GRAFFITI]);
   }, [navi]);
+
+  React.useEffect(() => {
+    // 방문자 수 증가
+    (async () => {
+      await addVisits(navi, mbIdx.toString());
+    })();
+
+    // 싫어요, Jonna 싫어요 개수 조회
+    (async () => {
+      await getEvaluation(navi, mbIdx.toString());
+    })();
+  }, [JSON.stringify(mbData)]);
 
   /* ―――――――――――――――― Return ―――――――――――――――― */
   return (
@@ -408,12 +380,45 @@ function MBSaga(props: MBSagaProps) {
         </div>
       ) : null}
       <article>
-        <div className={classNames('speak-player', !mbPlayer ? 'stop' : '')} onClick={() => setMbPlayer(!mbPlayer)}></div>
-        <div className={'copy-url'} onClick={() => copyURL()}></div>
+        <section className="info-section">
+          <span>
+            {`조회수 `}
+            <em>{`${Util.format.insertComma(infoVisits)}`}</em>
+            {`회`}
+          </span>
+          <span>
+            {`싫어요 `}
+            <em>{`${Util.format.insertComma(infoHates)}`}</em>
+            {`회`}
+          </span>
+          <span>
+            {`X싫어요 `}
+            <em>{`${Util.format.insertComma(infoJonnaHates)}`}</em>
+            {`회`}
+          </span>
+          <span>
+            <em>{`${Util.format.date(mbData.date, 'Y-M-D')}`}</em>
+          </span>
+        </section>
+        <section className="use-section">
+          <div className="hate" onClick={() => addDislike(navi, mbIdx.toString())}>
+            <Icon name="thumbs-down" type="solid" />
+            <em>싫어요</em>
+          </div>
+          <div className="jonna-hate" onClick={() => addDetest(navi, mbIdx.toString())}>
+            <Icon name="hand-middle-finger" type="solid" />
+            <em>X싫어요</em>
+          </div>
+          <div className="copy" onClick={() => copyURL()}>
+            <Icon name="paperclip" type="solid" />
+            <em>공유</em>
+          </div>
+        </section>
+        <div className={classNames('speak-player', !mbPlayer ? 'stop' : '')} onClick={() => setMbPlayer(!mbPlayer)} style={{ display: 'none' }}></div>
+        <div className={'copy-url'} onClick={() => copyURL()} style={{ display: 'none' }}></div>
         <div className="main-box">
           <img src={MB_ART_02} alt="GOD MB" />
           <div className="main-box-wrap" ref={ref}>
-            <div className="date">{`${Util.format.date(mbData.date, 'Y-M-D')}`}</div>
             <div className="contents" onMouseUp={handleContentsMouseUp}>
               {!!mbData.highlight ? <span className="highlight">{mbData.highlight}</span> : null}
               {`${mbData.contents}`}
