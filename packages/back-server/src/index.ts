@@ -50,7 +50,7 @@ async function getBlogEvaluationCount(
   let count = 0;
 
   const res = await pg.query(`
-    SELECT COUNT(id) AS count 
+    SELECT count
     FROM mb_blog_evaluation 
     WHERE category = '${category}' 
     AND story_id = '${storyId}'
@@ -69,10 +69,11 @@ async function addBlogEvaluationCount(
   type: EvaluationType
 ) {
   await pg.query(`
-    INSERT INTO mb_blog_evaluation
-    (category, story_id, type)
-    VALUES 
-    ('${category}', '${storyId}','${type}');
+    INSERT INTO mb_blog_evaluation (category, story_id, type)
+    VALUES ('${category}', '${storyId}','${type}')
+    ON CONFLICT (category, story_id, type)
+    DO UPDATE
+    SET count = mb_blog_evaluation.count + 1;
   `);
 }
 
