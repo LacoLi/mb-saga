@@ -70,8 +70,8 @@ async function addBlogEvaluationCount(
   type: EvaluationType
 ) {
   await pg.query(`
-    INSERT INTO mb_blog_evaluation (category, story_id, type)
-    VALUES ('${category}', '${storyId}','${type}')
+    INSERT INTO mb_blog_evaluation (category, story_id, type, count)
+    VALUES ('${category}', '${storyId}','${type}', 1)
     ON CONFLICT (category, story_id, type)
     DO UPDATE
     SET count = mb_blog_evaluation.count + 1;
@@ -90,8 +90,8 @@ app.put(
     try {
       // 방문자 수 증가
       await pg.query(`
-  INSERT INTO mb_blog_visitant (category, story_id)
-  VALUES ('${category}', '${storyId}')
+  INSERT INTO mb_blog_visitant (category, story_id, visits)
+  VALUES ('${category}', '${storyId}', 1)
   ON CONFLICT (category, story_id)
   DO UPDATE
   SET visits = mb_blog_visitant.visits + 1;
