@@ -12,7 +12,8 @@ app.use(cors());
 /* MB Bible start ------------------------------------------------ */
 const pg = new Pool({
   user: "lacolico",
-  host: "bible.hmbgaq.com",
+  host: "db",
+  // host: "bible.hmbgaq.com",
   database: "lacolico",
   password: "1q2w3e4r!",
   port: 5432,
