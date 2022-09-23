@@ -13,8 +13,7 @@ app.use(cors());
 const pg = new Pool({
   user: "lacolico",
   //host: "db",
-  //host: "bible.hmbgaq.com",
-  host: "localhost",
+  host: "bible.hmbgaq.com",
   database: "lacolico",
   password: "1q2w3e4r!",
   port: 5432,
