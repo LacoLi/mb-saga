@@ -103,7 +103,7 @@ app.put(
     } catch (e) {
       response.send({
         data: {
-          message: "",
+          message: (e as Error).message,
         },
         result: "fail",
       });
@@ -145,7 +145,7 @@ app.get(
     } catch (e) {
       response.send({
         data: {
-          message: "",
+          message: (e as Error).message,
         },
         result: "fail",
       });
@@ -185,7 +185,7 @@ app.put(
     } catch (e) {
       response.send({
         data: {
-          message: "",
+          message: (e as Error).message,
         },
         result: "fail",
       });
@@ -225,7 +225,7 @@ app.put(
     } catch (e) {
       response.send({
         data: {
-          message: "",
+          message: (e as Error).message,
         },
         result: "fail",
       });
@@ -270,7 +270,7 @@ app.get(
     } catch (e) {
       response.send({
         data: {
-          message: "",
+          message: (e as Error).message,
         },
         result: "fail",
       });
