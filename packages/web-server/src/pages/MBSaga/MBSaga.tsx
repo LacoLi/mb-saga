@@ -67,7 +67,13 @@ function MBSaga(props: MBSagaProps) {
     sort: SortType.ASC,
   });
   const [mbIdx, setMbIdx] = React.useState<number>(!!paramId ? Number(paramId) : Math.floor(Math.random() * mbList.length));
-  const [mbData, setMbData] = React.useState<IMBData>(mbList[mbIdx]);
+  const [mbData, setMbData] = React.useState<{
+    category: BlogCategoryType;
+    data: IMBData;
+  }>({
+    category: paramNav === BlogCategoryType.ME ? BlogCategoryType.ME : BlogCategoryType.GRAFFITI,
+    data: mbList[mbIdx],
+  });
   const [mbHidden, setMbHidden] = React.useState<boolean>(false);
   const [mbPlayer, setMbPlayer] = React.useState<boolean>(false);
   const [mbSpeakContents, setMbSpeakContents] = React.useState<string | undefined>(undefined);
@@ -76,7 +82,8 @@ function MBSaga(props: MBSagaProps) {
   const [infoJonnaHates, setInfoJonnaHates] = React.useState<number>(0);
 
   /* ===== Ref ===== */
-  const ref = React.useRef<HTMLDivElement>(null);
+  const listRef = React.useRef<HTMLUListElement>(null);
+  const contentsRef = React.useRef<HTMLDivElement>(null);
 
   /* ====== API ====== */
   const API_SERVER = `http://${domain}:666`;
@@ -150,6 +157,7 @@ function MBSaga(props: MBSagaProps) {
   /* ―――――――――――――――― Method ―――――――――――――――― */
   const handleNavClick = (v: BlogCategoryType) => {
     setNavi(v);
+    if (!!listRef.current) listRef.current.scrollTo({ top: 0 });
   };
   const handleSearchChange = (option: typeof searchOption) => {
     setSearchOption(option);
@@ -163,9 +171,12 @@ function MBSaga(props: MBSagaProps) {
   };
   const handleListClick = (v: IMBData, i: number) => {
     setMbIdx(i);
-    setMbData(v);
+    setMbData({
+      category: navi,
+      data: v,
+    });
     setMbSpeakContents(undefined);
-    if (!!ref.current) ref.current.scrollTo({ top: 0, behavior: 'smooth' });
+    if (!!contentsRef.current) contentsRef.current.scrollTo({ top: 0, behavior: 'smooth' });
   };
   const handleContentsMouseUp = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     //const speakContents = !!document.getSelection() ? document.getSelection()?.toString() : undefined;
@@ -183,7 +194,7 @@ function MBSaga(props: MBSagaProps) {
     speechMsg.rate = 1; // 속도: 0.1 ~ 10
     speechMsg.pitch = 1; // 음높이: 0 ~ 2
     speechMsg.lang = 'ko-KR';
-    speechMsg.text = !!mbSpeakContents ? mbSpeakContents : mbData.contents;
+    speechMsg.text = !!mbSpeakContents ? mbSpeakContents : mbData.data.contents;
 
     speechMsg.onend = () => {
       //if (!!mbPlayer) setMbSpeakContents(undefined);
@@ -207,7 +218,7 @@ function MBSaga(props: MBSagaProps) {
     const tempElement = document.createElement('textarea');
     document.body.appendChild(tempElement);
     tempElement.readOnly = true;
-    tempElement.value = `http://bible.hmbgaq.com/mb-saga/${navi}/${mbIdx}`;
+    tempElement.value = `http://${domain}/mb-saga/${mbData.category}/${mbIdx}`;
     tempElement.select();
     document.execCommand('copy');
 
@@ -223,7 +234,7 @@ function MBSaga(props: MBSagaProps) {
     } else {
       window.speechSynthesis.cancel();
     }
-  }, [mbPlayer, mbSpeakContents, mbData.contents]);
+  }, [mbPlayer, mbSpeakContents, mbData.data.contents]);
 
   React.useEffect(() => {
     setMbList(navi === BlogCategoryType.ME ? [...MB_NA] : [...MB_GRAFFITI]);
@@ -243,7 +254,7 @@ function MBSaga(props: MBSagaProps) {
 
   /* ―――――――――――――――― Return ―――――――――――――――― */
   return (
-    <div data-page="mbSaga" className={classNames(mbData.tag.length > 0 ? 'use-tags' : '')}>
+    <div data-page="mbSaga" className={classNames(mbData.data.tag.length > 0 ? 'use-tags' : '')}>
       <nav>
         <ul>
           <li className={classNames(navi === BlogCategoryType.ME ? 'active' : '')}>
@@ -267,7 +278,7 @@ function MBSaga(props: MBSagaProps) {
           <input value={searchOption.text} onChange={(v) => handleSearchChange({ ...searchOption, text: v.target.value })} />
           <div className="list-control" onClick={() => setMbHidden(!mbHidden)}></div>
         </div>
-        <ul className="select-list">
+        <ul className="select-list" ref={listRef}>
           <li className="select-header">
             <span
               className={classNames(getSortClass(SortTargetType.INDEX))}
@@ -361,10 +372,10 @@ function MBSaga(props: MBSagaProps) {
             })}
         </ul>
       </header>
-      <div className="title">{`[${mbIdx}] ${mbData.title}`}</div>
-      {mbData.tag.length > 0 ? (
+      <div className="title">{`[${mbIdx}] ${mbData.data.title}`}</div>
+      {mbData.data.tag.length > 0 ? (
         <div className="tags">
-          {mbData.tag.map((v, i) => {
+          {mbData.data.tag.map((v, i) => {
             return (
               <span
                 key={i}
@@ -397,7 +408,7 @@ function MBSaga(props: MBSagaProps) {
             {`회`}
           </span>
           <span>
-            <em>{`${Util.format.date(mbData.date, 'Y-M-D')}`}</em>
+            <em>{`${Util.format.date(mbData.data.date, 'Y-M-D')}`}</em>
           </span>
         </section>
         <section className="use-section">
@@ -418,10 +429,10 @@ function MBSaga(props: MBSagaProps) {
         <div className={'copy-url'} onClick={() => copyURL()} style={{ display: 'none' }}></div>
         <div className="main-box">
           <img src={MB_ART_02} alt="GOD MB" />
-          <div className="main-box-wrap" ref={ref}>
+          <div className="main-box-wrap" ref={contentsRef}>
             <div className="contents" onMouseUp={handleContentsMouseUp}>
-              {!!mbData.highlight ? <span className="highlight">{mbData.highlight}</span> : null}
-              {`${mbData.contents}`}
+              {!!mbData.data.highlight ? <span className="highlight">{mbData.data.highlight}</span> : null}
+              {`${mbData.data.contents}`}
             </div>
           </div>
         </div>
