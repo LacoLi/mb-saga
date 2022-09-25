@@ -1,0 +1,25 @@
+[data-page='translate'] {
+    padding: 20px;
+
+    &>div {
+        &>em {
+            &.title {
+                font-size: 2.5em;
+            }
+
+            &.id {
+                font-size: 1.5em;
+            }
+        }
+
+        &>input[type='text'] {
+            width: 100%;
+            height: 20px;
+        }
+
+        &>.w-md-editor {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}

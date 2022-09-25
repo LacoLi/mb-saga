@@ -4,6 +4,7 @@ import _Blog from './Blog';
 import _Twitch from './Twitch';
 import _MBSaga from './MBSaga';
 import _Rocketcher from './Rocketcher';
+import _Translate from './Translate';
 namespace Pages {
   export const Main = _Main;
   export const Bible = _Bible;
@@ -11,6 +12,7 @@ namespace Pages {
   export const Twitch = _Twitch;
   export const MBSaga = _MBSaga;
   export const Rocketcher = _Rocketcher;
+  export const Translate = _Translate;
 }
 
 export default Pages;

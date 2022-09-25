@@ -10,7 +10,7 @@ import React, { HTMLAttributes } from 'react';
 import classNames from 'classnames';
 
 interface IconProps {
-  type: 'solid' | 'regular' | 'light' | 'thin' | 'duotone';
+  type: 'solid' | 'regular' | 'light' | 'thin' | 'duotone' | 'brands';
   name: string;
   rotate?: '90' | '180' | '270';
   color?: string;
@@ -19,10 +19,10 @@ interface IconProps {
 }
 
 function Icon(props: IconProps) {
-  const { type, rotate, name, color, className = '', onClick = (e: React.MouseEvent) => {} } = props;
+  const { type, rotate, name, color, className = '', onClick = (e: React.MouseEvent) => { } } = props;
   return <i className={classNames(`fa-${type}`, `fa-${name}`, `fa-rotate-${rotate}`, className)} data-module="icon" onClick={onClick} />;
 }
 
-namespace Icon {}
+namespace Icon { }
 
 export default Icon;

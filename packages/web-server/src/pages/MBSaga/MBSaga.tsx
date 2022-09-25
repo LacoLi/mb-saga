@@ -9,8 +9,8 @@
 import React, { useEffect } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import ANT_DEN from '../../resource/sound/ant-den.mp3';
-import { MB_NA, IMBData, TagColor } from '../../common/const/mb-me';
-import { MB_NA as MB_GRAFFITI } from '../../common/const/mb-graffiti';
+import { MB_ME, IMBData, TagColor } from '../../common/const/mb-me';
+import { MB_GRAFFITI } from '../../common/const/mb-graffiti';
 import Util from '../../common/util';
 import classNames from 'classnames';
 import MB_PROFILE from '../../resource/image/gmb-profile.png';
@@ -18,8 +18,9 @@ import MB_ART_02 from '../../resource/image/mb-art-02.png';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Icon } from 'lib/AmzPack';
+import MDEditor from '@uiw/react-md-editor';
 
-interface MBSagaProps {}
+interface MBSagaProps { }
 
 enum BlogCategoryType {
   ME = 'me',
@@ -46,10 +47,15 @@ enum SortType {
   DESC,
 }
 
+enum ViewerType {
+  TEXT,
+  MARKDOWN,
+}
+
 function MBSaga(props: MBSagaProps) {
   /* ――――――――――――――― Variable ――――――――――――――― */
   /* ===== Props ===== */
-  const {} = props;
+  const { } = props;
   const { paramNav = BlogCategoryType.ME, paramId } = useParams();
 
   /* ===== Const ===== */
@@ -57,7 +63,7 @@ function MBSaga(props: MBSagaProps) {
 
   /* ===== State ===== */
   const [navi, setNavi] = React.useState<BlogCategoryType>(paramNav === BlogCategoryType.ME ? BlogCategoryType.ME : BlogCategoryType.GRAFFITI);
-  const [mbList, setMbList] = React.useState<IMBData[]>(paramNav === BlogCategoryType.ME ? [...MB_NA] : [...MB_GRAFFITI]);
+  const [mbList, setMbList] = React.useState<IMBData[]>(paramNav === BlogCategoryType.ME ? [...MB_ME] : [...MB_GRAFFITI]);
   const [searchOption, setSearchOption] = React.useState<{
     type: SearchType;
     text: string;
@@ -80,6 +86,7 @@ function MBSaga(props: MBSagaProps) {
   const [infoVisits, setInfoVisits] = React.useState<number>(0);
   const [infoHates, setInfoHates] = React.useState<number>(0);
   const [infoJonnaHates, setInfoJonnaHates] = React.useState<number>(0);
+  const [viewer, setViewer] = React.useState<ViewerType>(ViewerType.TEXT);
 
   /* ===== Ref ===== */
   const listRef = React.useRef<HTMLUListElement>(null);
@@ -240,7 +247,7 @@ function MBSaga(props: MBSagaProps) {
   }, [mbPlayer, mbSpeakContents, mbData.data.contents]);
 
   React.useEffect(() => {
-    setMbList(navi === BlogCategoryType.ME ? [...MB_NA] : [...MB_GRAFFITI]);
+    setMbList(navi === BlogCategoryType.ME ? [...MB_ME] : [...MB_GRAFFITI]);
   }, [navi]);
 
   React.useEffect(() => {
@@ -315,9 +322,9 @@ function MBSaga(props: MBSagaProps) {
                   return searchOption.text === ''
                     ? true
                     : i === Number(searchOption.text) ||
-                        v.title.includes(searchOption.text) ||
-                        v.contents.includes(searchOption.text) ||
-                        v.tag.filter((ele) => new RegExp(searchOption.text).test(ele)).length > 0;
+                    v.title.includes(searchOption.text) ||
+                    v.contents.includes(searchOption.text) ||
+                    v.tag.filter((ele) => new RegExp(searchOption.text).test(ele)).length > 0;
                 case SearchType.INDEX:
                   return searchOption.text === '' ? true : i === Number(searchOption.text);
                 case SearchType.TITLE:
@@ -337,20 +344,20 @@ function MBSaga(props: MBSagaProps) {
                 return a.title > b.title
                   ? -1 * (sortOption.sort === SortType.ASC ? -1 : 1)
                   : a.title === b.title
-                  ? 0
-                  : 1 * (sortOption.sort === SortType.ASC ? -1 : 1);
+                    ? 0
+                    : 1 * (sortOption.sort === SortType.ASC ? -1 : 1);
               } else if (sortOption.type === SortTargetType.DATE) {
                 return a.date > b.date
                   ? -1 * (sortOption.sort === SortType.ASC ? -1 : 1)
                   : a.date === b.date
-                  ? 0
-                  : 1 * (sortOption.sort === SortType.ASC ? -1 : 1);
+                    ? 0
+                    : 1 * (sortOption.sort === SortType.ASC ? -1 : 1);
               } else if (sortOption.type === SortTargetType.TAG) {
                 return a.tag.length > b.tag.length
                   ? -1 * (sortOption.sort === SortType.ASC ? -1 : 1)
                   : a.tag.length === b.tag.length
-                  ? 0
-                  : 1 * (sortOption.sort === SortType.ASC ? -1 : 1);
+                    ? 0
+                    : 1 * (sortOption.sort === SortType.ASC ? -1 : 1);
               } else {
                 return 1;
               }
@@ -427,16 +434,25 @@ function MBSaga(props: MBSagaProps) {
             <Icon name="paperclip" type="solid" />
             <em>공유</em>
           </div>
+          <div className="viewer" onClick={() => setViewer(ViewerType.TEXT)}>
+            <Icon name="t" type="solid" />
+            <em>Text</em>
+          </div>
+          <div className="viewer" onClick={() => setViewer(ViewerType.MARKDOWN)}>
+            <Icon name="markdown" type="brands" />
+            <em>Markdown</em>
+          </div>
         </section>
         <div className={classNames('speak-player', !mbPlayer ? 'stop' : '')} onClick={() => setMbPlayer(!mbPlayer)} style={{ display: 'none' }}></div>
         <div className={'copy-url'} onClick={() => copyURL()} style={{ display: 'none' }}></div>
         <div className="main-box">
           <img src={MB_ART_02} alt="GOD MB" />
           <div className="main-box-wrap" ref={contentsRef}>
-            <div className="contents" onMouseUp={handleContentsMouseUp}>
+            {viewer === ViewerType.TEXT ? <div className="contents" onMouseUp={handleContentsMouseUp}>
               {!!mbData.data.highlight ? <span className="highlight">{mbData.data.highlight}</span> : null}
               {`${mbData.data.contents}`}
-            </div>
+            </div> : null}
+            {viewer === ViewerType.MARKDOWN ? <MDEditor.Markdown source={mbData.data.contents} /> : null}
           </div>
         </div>
       </article>
@@ -445,6 +461,6 @@ function MBSaga(props: MBSagaProps) {
   );
 }
 
-namespace MBSaga {}
+namespace MBSaga { }
 
 export default MBSaga;

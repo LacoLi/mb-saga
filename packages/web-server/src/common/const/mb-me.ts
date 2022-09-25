@@ -43,7 +43,7 @@ export interface IMBData {
   contents: string;
 }
 
-export const MB_NA: IMBData[] = [
+export const MB_ME: IMBData[] = [
   {
     title: `...`,
     tag: [],

@@ -1,6 +1,6 @@
 import { IMBData, Tag } from './mb-me';
 
-export const MB_NA: IMBData[] = [
+export const MB_GRAFFITI: IMBData[] = [
   {
     title: `...`,
     tag: [],
