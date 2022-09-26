@@ -237,23 +237,23 @@
   nav {
     height: 30px;
 
-    &>ul {
+    & > ul {
       font-size: 0;
       padding: 12px 12px 0;
 
-      &>li {
+      & > li {
         display: inline-block;
         vertical-align: middle;
         cursor: pointer;
 
-        &>span {
+        & > span {
           color: #fff;
           padding: 0 8px;
           font-size: 12px;
         }
 
         &.active {
-          &>span {
+          & > span {
             font-weight: 700;
           }
         }
@@ -283,7 +283,7 @@
     color: #fff;
     min-width: 0px;
 
-    &>.search {
+    & > .search {
       display: grid;
       grid-template-columns: 85px 1fr 30px;
       grid-column-gap: 4px;
@@ -324,7 +324,7 @@
       }
     }
 
-    &>.select-list {
+    & > .select-list {
       width: 100%;
       height: 180px;
       overflow-x: hidden;
@@ -333,7 +333,7 @@
       -webkit-overflow-scrolling: touch;
       transition: height 1s cubic-bezier(0.075, 0.82, 0.165, 1) 0s, padding 1s cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
 
-      &>li {
+      & > li {
         display: grid;
         grid-template-columns: 42px 1fr 0.5fr 80px;
         height: 22px;
@@ -342,7 +342,7 @@
         border-bottom: 1px solid #000;
         cursor: pointer;
 
-        &>span {
+        & > span {
           white-space: nowrap;
           overflow: hidden;
 
@@ -366,13 +366,13 @@
         }
       }
 
-      &>.select-header {
+      & > .select-header {
         position: sticky;
         top: 0;
         left: 0;
         background-color: #000;
 
-        &>span {
+        & > span {
           text-align: center !important;
           padding-left: 0 !important;
 
@@ -399,7 +399,7 @@
     &.hide-list {
       grid-template-rows: auto;
 
-      &>.search {
+      & > .search {
         & .list-control {
           &::before {
             transform: translate(-50%, -50%) rotate(0deg);
@@ -407,7 +407,7 @@
         }
       }
 
-      &>.select-list {
+      & > .select-list {
         height: 0;
       }
     }
@@ -441,27 +441,39 @@
       top: 20px;
       right: 30px;
 
-      &>div {
+      & > div {
         display: grid;
         grid-template-columns: auto;
         justify-items: center;
         grid-gap: 6px;
         cursor: pointer;
 
-        &>i {
+        & > i {
           font-size: 40px;
           color: #373737;
         }
 
-        &>em {
+        & > em {
           font-size: 12px;
         }
 
         &.hate,
         &.jonna-hate {
-          &>i {
+          & > i {
             color: #ff0000;
             text-shadow: -1px 0px #fff, 0px 1px #fff, 1px 0px #fff, 0px -1px #fff;
+          }
+        }
+
+        &.speak-player {
+          & > i {
+            text-shadow: -1px 0px #fff, 0px 1px #fff, 1px 0px #fff, 0px -1px #fff;
+            transition: color 0.2s linear 0s;
+          }
+          &.area-active {
+            & > i {
+              color: rgb(82, 186, 255);
+            }
           }
         }
       }
@@ -478,7 +490,7 @@
     font-size: 0;
     white-space: nowrap;
 
-    &>.tag {
+    & > .tag {
       display: inline-block;
       border-radius: 3px;
       padding: 3px 7px 1px;
@@ -520,6 +532,16 @@
       width: 0;
       height: 100%;
     }
+  }
+
+  .bgm {
+    position: absolute;
+    color: #fff;
+    top: 14px;
+    right: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
   }
 
   .title {
@@ -574,46 +596,6 @@
       100% {
         color: rgb(200, 0, 255);
       }
-    }
-  }
-
-  .speak-player {
-    position: absolute;
-    top: 20px;
-    left: 25px;
-    z-index: 10;
-    cursor: pointer;
-
-    &::before {
-      content: '❚❚';
-      display: block;
-      width: 22px;
-      height: 24px;
-      font-size: 25px;
-      color: #000;
-    }
-
-    &.stop::before {
-      content: '▶';
-    }
-  }
-
-  .copy-url {
-    position: absolute;
-    top: 20px;
-    right: 25px;
-    z-index: 10;
-    border-radius: 5px;
-    background-color: #0f9e00;
-    cursor: pointer;
-
-    &::before {
-      content: 'URL복사';
-      display: block;
-      font-size: 12px;
-      font-weight: 700;
-      padding: 4px 6px 1px 6px;
-      color: #fffeb8;
     }
   }
 
@@ -701,7 +683,7 @@
       box-sizing: border-box;
       white-space: pre-line;
 
-      &>.highlight {
+      & > .highlight {
         display: block;
         color: #f00;
         margin-bottom: 30px;
@@ -719,7 +701,7 @@
       }
     }
 
-    &>div {
+    & > div {
       position: relative;
       z-index: 2;
     }
@@ -746,8 +728,8 @@
       grid-gap: 10px;
 
       &.use-section {
-        &>div {
-          &>i {
+        & > div {
+          & > i {
             font-size: 30px;
           }
         }
@@ -760,8 +742,8 @@
 @media (max-width: 992px) {
   [data-page='mbSaga'] {
     header {
-      &>.select-list {
-        &>li {
+      & > .select-list {
+        & > li {
           grid-template-columns: 42px 1fr 270px 80px;
         }
       }
@@ -773,12 +755,12 @@
       &.info-section {
         position: static;
         color: #fff;
-        height: 34px;
+        height: 24px;
         grid-template-columns: repeat(4, auto) 1fr;
-        padding-bottom: 20px;
+        padding-bottom: 10px;
         box-sizing: border-box;
 
-        &>span {
+        & > span {
           font-size: 12px;
 
           & em {
@@ -788,17 +770,22 @@
       }
 
       &.use-section {
-        grid-template-columns: repeat(5, auto);
-        top: 10px;
-        right: 2px;
+        position: static;
+        height: 34px;
+        grid-template-columns: 1fr repeat(6, auto);
+        padding-bottom: 20px;
+        //top: 10px;
+        //right: 2px;
+        justify-items: end;
+        box-sizing: border-box;
 
-        &>div {
-          &>i {
+        & > div {
+          & > i {
             font-size: 14px;
             color: #fff;
           }
 
-          &>em {
+          & > em {
             display: none;
           }
         }
@@ -806,7 +793,7 @@
     }
 
     .main-box {
-      height: calc(100% - 34px);
+      height: calc(100% - 58px);
     }
   }
 }
@@ -815,8 +802,8 @@
 @media (max-width: 800px) {
   [data-page='mbSaga'] {
     header {
-      &>.select-list {
-        &>li {
+      & > .select-list {
+        & > li {
           grid-template-columns: 42px 1fr 0 80px;
         }
       }
@@ -825,4 +812,5 @@
 }
 
 // 가로모드 모바일 디바이스 (가로 해상도가 576px 보다 작은 화면에 적용)
-@media (max-width: 576px) {}
+@media (max-width: 576px) {
+}

@@ -20,7 +20,7 @@ import axios from 'axios';
 import { Icon } from 'lib/AmzPack';
 import MDEditor from '@uiw/react-md-editor';
 
-interface MBSagaProps { }
+interface MBSagaProps {}
 
 enum BlogCategoryType {
   ME = 'me',
@@ -55,7 +55,7 @@ enum ViewerType {
 function MBSaga(props: MBSagaProps) {
   /* ――――――――――――――― Variable ――――――――――――――― */
   /* ===== Props ===== */
-  const { } = props;
+  const {} = props;
   const { paramNav = BlogCategoryType.ME, paramId } = useParams();
 
   /* ===== Const ===== */
@@ -81,7 +81,14 @@ function MBSaga(props: MBSagaProps) {
     data: mbList[mbIdx],
   });
   const [mbHidden, setMbHidden] = React.useState<boolean>(false);
-  const [mbPlayer, setMbPlayer] = React.useState<boolean>(false);
+  const [bgmPlayer, setBgmPlayer] = React.useState<boolean>(true);
+  const [mbPlayer, setMbPlayer] = React.useState<{
+    state: boolean;
+    pause: boolean;
+  }>({
+    state: false,
+    pause: false,
+  });
   const [mbSpeakContents, setMbSpeakContents] = React.useState<string | undefined>(undefined);
   const [infoVisits, setInfoVisits] = React.useState<number>(0);
   const [infoHates, setInfoHates] = React.useState<number>(0);
@@ -89,6 +96,7 @@ function MBSaga(props: MBSagaProps) {
   const [viewer, setViewer] = React.useState<ViewerType>(ViewerType.TEXT);
 
   /* ===== Ref ===== */
+  const audioRef = React.useRef<ReactAudioPlayer>(null);
   const listRef = React.useRef<HTMLUListElement>(null);
   const contentsRef = React.useRef<HTMLDivElement>(null);
 
@@ -189,14 +197,23 @@ function MBSaga(props: MBSagaProps) {
     if (!!contentsRef.current) contentsRef.current.scrollTo({ top: 0, behavior: 'smooth' });
   };
   const handleContentsMouseUp = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    //const speakContents = !!document.getSelection() ? document.getSelection()?.toString() : undefined;
-    //if (!!mbPlayer && !speakContents) return;
-    //setMbSpeakContents(speakContents);
+    const speakContents = !!document.getSelection() ? document.getSelection()?.toString() : undefined;
+
+    if (!!speakContents) {
+      setMbSpeakContents(speakContents);
+    }
+  };
+  const handleContentsTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    const speakContents = !!document.getSelection() ? document.getSelection()?.toString() : undefined;
+
+    if (!!speakContents) {
+      setMbSpeakContents(speakContents);
+    }
   };
   const speakGodMBText = () => {
-    //if (typeof SpeechSynthesisUtterance === 'undefined' || typeof window.speechSynthesis === 'undefined') {
-    //  return;
-    //}
+    if (typeof SpeechSynthesisUtterance === 'undefined' || typeof window.speechSynthesis === 'undefined') {
+      return;
+    }
 
     window.speechSynthesis.cancel(); // 현재 읽고있다면 초기화
 
@@ -207,13 +224,19 @@ function MBSaga(props: MBSagaProps) {
     speechMsg.text = !!mbSpeakContents ? mbSpeakContents : mbData.data.contents;
 
     speechMsg.onend = () => {
-      //if (!!mbPlayer) setMbSpeakContents(undefined);
+      setMbPlayer({
+        state: false,
+        pause: false,
+      });
 
-      setMbPlayer(false);
+      window.speechSynthesis.cancel();
     };
 
     // SpeechSynthesisUtterance에 저장된 내용을 바탕으로 음성합성 실행
     window.speechSynthesis.speak(speechMsg);
+  };
+  const pauseGodMBText = (type: boolean) => {
+    !!type ? window.speechSynthesis.pause() : window.speechSynthesis.resume();
   };
   const getSortClass = (type: SortTargetType) => {
     let returnClass = '';
@@ -239,12 +262,8 @@ function MBSaga(props: MBSagaProps) {
 
   /* ―――――――――――――― Use Effect ―――――――――――――― */
   React.useEffect(() => {
-    if (!!mbPlayer) {
-      speakGodMBText();
-    } else {
-      window.speechSynthesis.cancel();
-    }
-  }, [mbPlayer, mbSpeakContents, mbData.data.contents]);
+    window.speechSynthesis.cancel();
+  }, [mbData.data.contents]);
 
   React.useEffect(() => {
     setMbList(navi === BlogCategoryType.ME ? [...MB_ME] : [...MB_GRAFFITI]);
@@ -262,6 +281,16 @@ function MBSaga(props: MBSagaProps) {
     })();
   }, [JSON.stringify(mbData)]);
 
+  React.useEffect(() => {
+    if (audioRef.current && audioRef.current.audioEl.current) {
+      if (!bgmPlayer) {
+        audioRef.current.audioEl.current.pause();
+      } else {
+        audioRef.current.audioEl.current.play();
+      }
+    }
+  }, [bgmPlayer]);
+
   /* ―――――――――――――――― Return ―――――――――――――――― */
   return (
     <div data-page="mbSaga" className={classNames(mbData.data.tag.length > 0 ? 'use-tags' : '')}>
@@ -276,7 +305,7 @@ function MBSaga(props: MBSagaProps) {
         </ul>
       </nav>
       <header className={classNames(mbHidden ? 'hide-list' : '')}>
-        <ReactAudioPlayer src={ANT_DEN} autoPlay={true} loop />
+        <ReactAudioPlayer src={ANT_DEN} volume={0.4} autoPlay={true} loop ref={audioRef} />
         <div className="search">
           <select value={searchOption.type} onChange={(v) => handleSearchChange({ ...searchOption, type: v.target.value as SearchType })}>
             <option value={SearchType.ALL}>{`전체`}</option>
@@ -322,9 +351,9 @@ function MBSaga(props: MBSagaProps) {
                   return searchOption.text === ''
                     ? true
                     : i === Number(searchOption.text) ||
-                    v.title.includes(searchOption.text) ||
-                    v.contents.includes(searchOption.text) ||
-                    v.tag.filter((ele) => new RegExp(searchOption.text).test(ele)).length > 0;
+                        v.title.includes(searchOption.text) ||
+                        v.contents.includes(searchOption.text) ||
+                        v.tag.filter((ele) => new RegExp(searchOption.text).test(ele)).length > 0;
                 case SearchType.INDEX:
                   return searchOption.text === '' ? true : i === Number(searchOption.text);
                 case SearchType.TITLE:
@@ -344,20 +373,20 @@ function MBSaga(props: MBSagaProps) {
                 return a.title > b.title
                   ? -1 * (sortOption.sort === SortType.ASC ? -1 : 1)
                   : a.title === b.title
-                    ? 0
-                    : 1 * (sortOption.sort === SortType.ASC ? -1 : 1);
+                  ? 0
+                  : 1 * (sortOption.sort === SortType.ASC ? -1 : 1);
               } else if (sortOption.type === SortTargetType.DATE) {
                 return a.date > b.date
                   ? -1 * (sortOption.sort === SortType.ASC ? -1 : 1)
                   : a.date === b.date
-                    ? 0
-                    : 1 * (sortOption.sort === SortType.ASC ? -1 : 1);
+                  ? 0
+                  : 1 * (sortOption.sort === SortType.ASC ? -1 : 1);
               } else if (sortOption.type === SortTargetType.TAG) {
                 return a.tag.length > b.tag.length
                   ? -1 * (sortOption.sort === SortType.ASC ? -1 : 1)
                   : a.tag.length === b.tag.length
-                    ? 0
-                    : 1 * (sortOption.sort === SortType.ASC ? -1 : 1);
+                  ? 0
+                  : 1 * (sortOption.sort === SortType.ASC ? -1 : 1);
               } else {
                 return 1;
               }
@@ -382,6 +411,9 @@ function MBSaga(props: MBSagaProps) {
             })}
         </ul>
       </header>
+      <div className="bgm" onClick={() => setBgmPlayer(!bgmPlayer)}>
+        <span>{`BGM ${bgmPlayer ? 'ON' : 'OFF'}`}</span>
+      </div>
       <div className="title">{`[${mbIdx}] ${mbData.data.title}`}</div>
       {mbData.data.tag.length > 0 ? (
         <div className="tags">
@@ -422,6 +454,32 @@ function MBSaga(props: MBSagaProps) {
           </span>
         </section>
         <section className="use-section">
+          <div
+            className={classNames('speak-player', !!mbSpeakContents ? 'area-active' : '')}
+            onClick={() => {
+              if (!mbPlayer.state && !mbPlayer.pause) {
+                setMbPlayer({ state: true, pause: false });
+                speakGodMBText();
+              } else {
+                setMbPlayer({ state: true, pause: !mbPlayer.pause });
+                pauseGodMBText(!mbPlayer.pause);
+              }
+            }}
+          >
+            <Icon name={classNames(!mbPlayer.state || mbPlayer.pause ? 'play' : 'pause')} type="solid" />
+            <em>{`${!mbPlayer.state || mbPlayer.pause ? '재생' : '일시정지'}`}</em>
+          </div>
+          <div
+            className="speak-player"
+            onClick={() => {
+              setMbPlayer({ state: false, pause: false });
+              setMbSpeakContents(undefined);
+              window.speechSynthesis.cancel();
+            }}
+          >
+            <Icon name="stop" type="solid" />
+            <em>정지</em>
+          </div>
           <div className="hate" onClick={() => addDislike(navi, mbIdx.toString())}>
             <Icon name="thumbs-down" type="solid" />
             <em>싫어요</em>
@@ -443,15 +501,15 @@ function MBSaga(props: MBSagaProps) {
             <em>Markdown</em>
           </div>
         </section>
-        <div className={classNames('speak-player', !mbPlayer ? 'stop' : '')} onClick={() => setMbPlayer(!mbPlayer)} style={{ display: 'none' }}></div>
-        <div className={'copy-url'} onClick={() => copyURL()} style={{ display: 'none' }}></div>
         <div className="main-box">
           <img src={MB_ART_02} alt="GOD MB" />
           <div className="main-box-wrap" ref={contentsRef}>
-            {viewer === ViewerType.TEXT ? <div className="contents" onMouseUp={handleContentsMouseUp}>
-              {!!mbData.data.highlight ? <span className="highlight">{mbData.data.highlight}</span> : null}
-              {`${mbData.data.contents}`}
-            </div> : null}
+            {viewer === ViewerType.TEXT ? (
+              <div className="contents" onMouseUp={handleContentsMouseUp} onTouchEnd={handleContentsTouchEnd}>
+                {!!mbData.data.highlight ? <span className="highlight">{mbData.data.highlight}</span> : null}
+                {`${mbData.data.contents}`}
+              </div>
+            ) : null}
             {viewer === ViewerType.MARKDOWN ? <MDEditor.Markdown source={mbData.data.contents} /> : null}
           </div>
         </div>
@@ -461,6 +519,6 @@ function MBSaga(props: MBSagaProps) {
   );
 }
 
-namespace MBSaga { }
+namespace MBSaga {}
 
 export default MBSaga;
