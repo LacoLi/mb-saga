@@ -9,6 +9,7 @@
 import React, { useEffect } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import ANT_DEN from '../../resource/sound/ant-den.mp3';
+import ROMANCE_SM from '../../resource/sound/romance-sm.mp3';
 import { MB_ME, IMBData, TagColor } from '../../common/const/mb-me';
 import { MB_GRAFFITI } from '../../common/const/mb-graffiti';
 import Util from '../../common/util';
@@ -220,6 +221,7 @@ function MBSaga(props: MBSagaProps) {
     const speechMsg = new SpeechSynthesisUtterance();
     speechMsg.rate = 1; // 속도: 0.1 ~ 10
     speechMsg.pitch = 1; // 음높이: 0 ~ 2
+    speechMsg.volume = 0.4; // 볼륨: 0.6
     speechMsg.lang = 'ko-KR';
     speechMsg.text = !!mbSpeakContents ? mbSpeakContents : mbData.data.contents;
 
@@ -305,7 +307,7 @@ function MBSaga(props: MBSagaProps) {
         </ul>
       </nav>
       <header className={classNames(mbHidden ? 'hide-list' : '')}>
-        <ReactAudioPlayer src={ANT_DEN} volume={0.4} autoPlay={true} loop ref={audioRef} />
+        <ReactAudioPlayer src={ROMANCE_SM} volume={1} autoPlay={true} loop ref={audioRef} />
         <div className="search">
           <select value={searchOption.type} onChange={(v) => handleSearchChange({ ...searchOption, type: v.target.value as SearchType })}>
             <option value={SearchType.ALL}>{`전체`}</option>
